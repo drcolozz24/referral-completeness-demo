@@ -2,7 +2,7 @@
 
 **A small, open-source demonstration built to prompt discussion about one question: does a GP referral carry the information the receiving clinician says they need?**
 
-Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No commercial interest. Not affiliated with, or endorsed by, any practice, health service, employer or software vendor.
+Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No commercial interest. Not affiliated with, or endorsed by, any practice, health service or employer. No software vendor has been involved.
 
 - **Try it:** open `referral-completeness-demo.html` in any browser. It loads nothing from the internet and stores nothing.
 - **Argue with it:** use the Discussions tab. Disagreement is the point.
@@ -12,7 +12,7 @@ Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No comm
 
 ## Goals
 
-1. **Make one thing visible.** Every Australian state publishes lists of what a specialist referral should contain. No health system routinely measures whether referrals actually contain it. This page shows, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can see it and argue about it.
+1. **Make one thing visible.** Every Australian state publishes lists of what a specialist referral should contain. As far as I could find, no health system routinely measures whether referrals actually contain it. This page shows, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can see it and argue about it.
 2. **Invite disagreement from people who know.** GPs, specialists, triage nurses, practice managers, patients, and people who build the software GPs use. Is a check like this useful? Where would it sit? What does it get wrong? What would it miss?
 3. **Put the question on the record.** The written material in `docs/` sets out what was searched, what was found, and the narrower question that survived an attempt to disprove it.
 
@@ -26,7 +26,7 @@ Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No comm
 
 You are shown a fictional referral letter for adult chest pain. You tick which items from the published NSW Health referral criteria the letter contains. The page counts what is mentioned and what is not, and shows you the published list it compared against. That is all.
 
-The rule list is visible on screen and in the source code, and is reproduced word for word from the NSW Health page it links to (see *Sources and licences*).
+The rule list is visible on screen and in the source code, and is reproduced verbatim from the NSW Health page it links to, with the nine sub-items of "Patient health summary" counted individually (see *Sources and licences*).
 
 ## Limitations and caveats
 
@@ -47,9 +47,9 @@ Mistakes are expected. The protection is not the absence of errors but making th
 2. **Dated releases.** Every version is tagged; `CHANGELOG.md` records what changed and when.
 3. **A visible path to report errors.** The Issues tab, and a line on the page itself.
 4. **A correction rule.** A confirmed error is corrected in the next release and recorded in the changelog; if it was material, the page notes what changed.
-5. **Two automated checks.**
-   - `tests/test_demo.js` — opens the page in a headless browser and runs 47 checks: no external resources, no storage, the entry warning present, attribution present, the count correct for every tick state, every screen and button working, no script errors, no overflow at phone width. Run: `node tests/test_demo.js referral-completeness-demo.html`.
-   - `tests/check_criteria.py` — compares the demo's rule data, item by item, against a fetched copy of the NSW page, and reports any reworded, missing or extra item and any change of date. Run: `python3 tests/check_criteria.py referral-completeness-demo.html tests/fetched/<latest>.json`. A scheduled monthly run fetches the live NSW page and reports to the author.
+5. **Two automated checks**, plus an independent audit of the release before first publication (findings recorded in `CHANGELOG.md`).
+   - `tests/test_demo.js` — opens the page in a headless browser and runs 46 checks: no external resources, no storage, the entry warning present, attribution present, the count correct for the default, all-ticked and none-ticked states, every screen and button working, no script errors, no horizontal overflow at phone width on the letter screen. Run: `node tests/test_demo.js referral-completeness-demo.html`.
+   - `tests/check_criteria.py` — compares the demo's rule data and triage wording, item by item, against a fetched copy of the NSW page, and reports any reworded, missing or extra item and any change of date. Run: `python3 tests/check_criteria.py referral-completeness-demo.html tests/fetched/<latest>.json`. The author runs this monthly against a fresh fetch of the live NSW page (automated outside this repository); the outcome is recorded in `CHANGELOG.md`.
 
 ## The question behind it
 
@@ -75,7 +75,7 @@ docs/                              written material: the question, what was sear
 
 ## Sources and licences
 
-- Referral criteria: NSW Health, *Chest pain, discomfort and/or tightness in adult patients*, Statewide Referral Criteria, current as at 10 September 2026 — https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx. © State of New South Wales NSW Ministry of Health. Reproduced under Creative Commons Attribution 4.0. For current information go to www.health.nsw.gov.au.
+- Referral criteria: NSW Health, *Chest pain, discomfort and/or tightness in adult patients*, Statewide Referral Criteria, current as at 10 September 2026 — https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx. © State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Reproduced under Creative Commons Attribution 4.0.
 - Code: MIT licence (see `LICENSE`).
 - Written material in `docs/`: Creative Commons Attribution 4.0 International, © Ferney Bernal Buitrago.
 

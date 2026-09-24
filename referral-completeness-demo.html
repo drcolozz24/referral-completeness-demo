@@ -799,7 +799,7 @@
 <body>
     <!-- ENTRY GATE: intended purpose and warning, shown before anything else runs -->
     <div class="gate" id="gate">
-        <div class="gate-box" role="dialog" aria-labelledby="gateTitle">
+        <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
             <h1 id="gateTitle">Before you continue</h1>
             <h2>What this is</h2>
             <p>A small, open-source demonstration built to prompt discussion about one question: <strong>does a GP referral carry the information the receiving clinician says they need?</strong> It shows a fictional referral letter and counts which items from a published referral-criteria list are mentioned in it.</p>
@@ -808,7 +808,7 @@
                 <li>It is <strong>not a clinical tool</strong> and is <strong>not intended for use in the care of any person</strong>.</li>
                 <li>It is <strong>not a medical device</strong> and makes <strong>no clinical recommendation</strong>. It does not tell anyone what to order, diagnose or do.</li>
                 <li>It covers <strong>one condition, one jurisdiction, one fictional case</strong>. Nothing in it has been validated.</li>
-                <li>Do <strong>not enter real patient information</strong>. Nothing you type is stored or sent anywhere, but this page is not designed to hold it.</li>
+                <li>Do <strong>not enter real patient information</strong>. Nothing on this page is stored or sent anywhere, and it is not designed to hold patient information.</li>
             </ul>
             <div class="legal">
                 This software is provided free of charge, as is, for discussion and education. To the extent permitted by law, the author excludes all liability, <strong>including liability for negligence</strong>, for any loss arising from its use or from reliance on anything it displays. Nothing here excludes, restricts or modifies any guarantee, right or remedy that cannot lawfully be excluded under the Australian Consumer Law; to the extent such a guarantee applies, liability is limited to re-supply of the software. Clinical decisions remain entirely the responsibility of the treating clinician.
@@ -831,7 +831,7 @@
         <div id="screen1" class="screen active">
             <div class="intro">
                 <h2>Purpose</h2>
-                <p>Every Australian state publishes lists of what a specialist referral should contain. No health system routinely measures whether referrals actually contain it. This page lets you see, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can argue about whether it is useful, how it should work, and what it gets wrong.</p>
+                <p>Every Australian state publishes lists of what a specialist referral should contain. As far as I could find, no health system routinely measures whether referrals actually contain it. This page lets you see, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can argue about whether it is useful, how it should work, and what it gets wrong.</p>
 
                 <h2>How it works</h2>
                 <ul>
@@ -860,19 +860,19 @@
                 <div class="form-group">
                     <label class="form-label">Patient <span class="fictional-tag">FICTIONAL</span></label>
                     <div class="form-row">
-                        <div><input type="text" class="form-input" value="Mrs J. Example" disabled></div>
-                        <div><input type="text" class="form-input" value="67 F" disabled></div>
+                        <div><input type="text" class="form-input" value="Mrs J. Example" readonly aria-readonly="true"></div>
+                        <div><input type="text" class="form-input" value="67 F" readonly aria-readonly="true"></div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Referral to</label>
-                    <input type="text" class="form-input" value="Cardiology outpatients (NSW public) — adult chest pain" disabled>
+                    <input type="text" class="form-input" value="Cardiology outpatients (NSW public) — adult chest pain" readonly aria-readonly="true">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Letter as written <span class="fictional-tag">FICTIONAL</span></label>
-                    <textarea class="form-textarea" rows="7" disabled>Dear Colleague,
+                    <textarea class="form-textarea" rows="7" readonly aria-readonly="true" aria-label="Fictional referral letter">Dear Colleague,
 
 Thank you for seeing Mrs Example, 67, with three weeks of chest tightness on exertion, settling with rest. No pain at rest. Background of hypertension and type 2 diabetes. Current medications: metformin 1 g twice daily, amlodipine 10 mg daily. No known allergies. ECG today: sinus rhythm, no acute changes (tracing attached). Bloods last month: FBC and EUC normal.
 
@@ -882,7 +882,7 @@ Dr A. Referrer, General Practitioner</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Which of the published NSW items does this letter contain? Tick what you find.</label>
+                    <div class="form-label" id="lblTicks">Which of the published NSW items does this letter contain? Tick an item only when everything it lists is mentioned in the letter.</div>
                     <div class="check-list" id="checkList"></div>
                 </div>
 
@@ -928,7 +928,7 @@ Dr A. Referrer, General Practitioner</textarea>
                 </div>
 
                 <div class="src-note">
-                    Items are taken from NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients — Statewide Referral Criteria</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health, reproduced under Creative Commons Attribution 4.0. For current information go to www.health.nsw.gov.au.
+                    Items are taken from NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients — Statewide Referral Criteria</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Reproduced under Creative Commons Attribution 4.0. NSW publishes the nine investigation and assessment items as sub-items of "Patient health summary"; this page counts each sub-item separately, which is how the total of 13 arises.
                 </div>
 
                 <div class="button-group">
@@ -956,16 +956,16 @@ Dr A. Referrer, General Practitioner</textarea>
                 </div>
 
                 <div class="requirements-category">
-                    <div class="requirements-category-title">Triage categories published for this condition</div>
+                    <div class="requirements-category-title">Triage categories published for this condition <span class="requirement-badge recommended">Wording as published by NSW</span></div>
                     <div class="requirement-list">
-                        <div class="requirement-item">Category 1 — new chest pain or discomfort of a probable cardiac origin, in the absence of emergency criteria — recommended to be seen within 30 calendar days</div>
-                        <div class="requirement-item">Category 2 — chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin — within 90 calendar days</div>
-                        <div class="requirement-item">Category 3 — chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation — within 365 calendar days</div>
+                        <div class="requirement-item">Category 1 — Recommended to be seen within 30 calendar days — New chest pain or discomfort of a probable cardiac origin in the absence of Emergency criteria</div>
+                        <div class="requirement-item">Category 2 — Recommended to be seen within 90 calendar days — Chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin in the absence of Emergency criteria</div>
+                        <div class="requirement-item">Category 3 — Recommended to be seen within 365 calendar days — Chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation</div>
                     </div>
                 </div>
 
                 <div class="citation">
-                    <strong>Source:</strong> NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health. Licensed under Creative Commons Attribution 4.0. For current information go to www.health.nsw.gov.au. The page also lists emergency criteria for immediate referral to an emergency department; they are not reproduced here because this demonstration does not assess urgency.
+                    <strong>Source:</strong> NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Reproduced under Creative Commons Attribution 4.0. The page also lists emergency criteria for immediate referral to an emergency department; they are not reproduced here because this demonstration does not assess urgency.
                 </div>
 
                 <div class="button-group">
@@ -978,19 +978,19 @@ Dr A. Referrer, General Practitioner</textarea>
         <span class="watermark-text name">Dr Ferney Bernal Buitrago</span>
         <span class="watermark-text line">Personal work. No commercial interest.</span>
         <span class="watermark-text line">Not affiliated with, or endorsed by, any practice, health service or employer.</span>
-        <span class="watermark-text line" style="margin-top:8px;display:block;">Found a mistake? Mistakes are expected and corrections are welcome — report it through the repository's Issues page (link in the ⓘ panel). Please include no real patient information.</span>
+        <span class="watermark-text line" style="margin-top:8px;display:block;">Found a mistake? Mistakes are expected and corrections are welcome — report it through the repository's Issues page (address in the ⓘ panel). Please include no real patient information.</span>
     </div>
 
     </div>
 
     <!-- Info Modal -->
-    <div id="infoModal" class="modal">
+    <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
         <div class="modal-content">
-            <div class="modal-title">About this demonstration</div>
+            <div class="modal-title" id="infoTitle">About this demonstration</div>
             <div class="modal-text">
-                Built by Dr Ferney Bernal Buitrago, a general practitioner, as personal work with no commercial interest, to generate discussion about referral information flow. It is released as open source; the source code and the accompanying written material are in the public repository linked from the page you found this on.
+                Built by Dr Ferney Bernal Buitrago, a general practitioner, as personal work with no commercial interest, to generate discussion about referral information flow. It is released as open source; the source code, the written material and the place to report errors or disagree are at <a href="https://github.com/drcolozz24/referral-completeness-demo" target="_blank" rel="noopener">github.com/drcolozz24/referral-completeness-demo</a>.
                 <br><br>
-                It is not a clinical tool, not a medical device, and not affiliated with, or endorsed by, any practice, health service, employer or software vendor. It has not been validated. The criteria shown are reproduced from a NSW Health web page under Creative Commons Attribution 4.0; other jurisdictions' criteria are Crown copyright and were deliberately not reproduced.
+                It is not a clinical tool, not a medical device, and not affiliated with, or endorsed by, any practice, health service or employer. No software vendor has been involved. It has not been validated. The criteria shown are reproduced from a NSW Health web page under Creative Commons Attribution 4.0; other jurisdictions' criteria are Crown copyright and were deliberately not reproduced.
                 <br><br>
                 Feedback — especially disagreement — is the point. Use the repository's discussion page.
             </div>
@@ -1004,22 +1004,23 @@ Dr A. Referrer, General Practitioner</textarea>
         // The rule list. Reproduced from NSW Health, Statewide Referral Criteria,
         // "Chest pain, discomfort and/or tightness in adult patients", current as at 10 September 2026.
         // https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx
-        // © State of New South Wales NSW Ministry of Health, CC BY 4.0.
+        // © State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Reproduced under CC BY 4.0.
+        // NSW lists the nine items from "Alleviating interventions" to "Troponin" as sub-items of "Patient health summary"; they are flattened here (sub:true) and counted individually.
         // Items marked def:true are ticked by default because the fictional letter above mentions them.
         const REQUIRED = [
             { id:'reason',   text:'Reason for referral', def:true },
             { id:'present',  text:'Details of the presenting condition, including symptoms and their duration, and impact on activities of daily living', def:false },
             { id:'provdx',   text:'Provisional diagnosis', def:true },
             { id:'summary',  text:'Patient health summary (such as relevant medical history, relevant investigations, current medications and dosages, immunisations, allergies and/or adverse reactions), specifically including:', def:false },
-            { id:'mgmt',     text:'Alleviating interventions and management', def:false },
-            { id:'function', text:'Functional status assessment', def:false },
-            { id:'fbc',      text:'Full blood count', def:true },
-            { id:'euc',      text:'Electrolytes, urea and creatinine', def:true },
-            { id:'lipids',   text:'Fasting lipid profile', def:false },
-            { id:'hba1c',    text:'HbA1c (if diabetes is present or suspected)', def:false },
-            { id:'lft',      text:'Liver function tests', def:false },
-            { id:'ecg',      text:'Relevant electrocardiogram (ECG) tracings', def:true },
-            { id:'trop',     text:'Troponin (if indicated)', def:false }
+            { id:'mgmt',     text:'Alleviating interventions and management', def:false, sub:true },
+            { id:'function', text:'Functional status assessment', def:false, sub:true },
+            { id:'fbc',      text:'Full blood count', def:true, sub:true },
+            { id:'euc',      text:'Electrolytes, urea and creatinine', def:true, sub:true },
+            { id:'lipids',   text:'Fasting lipid profile', def:false, sub:true },
+            { id:'hba1c',    text:'HbA1c (if diabetes is present or suspected)', def:false, sub:true },
+            { id:'lft',      text:'Liver function tests', def:false, sub:true },
+            { id:'ecg',      text:'Relevant electrocardiogram (ECG) tracings', def:true, sub:true },
+            { id:'trop',     text:'Troponin (if indicated)', def:false, sub:true }
         ];
         const IF_AVAILABLE = [
             { id:'cvdrisk',  text:'Cardiovascular disease risk assessment', def:false },
@@ -1033,13 +1034,14 @@ Dr A. Referrer, General Practitioner</textarea>
             const cl = document.getElementById('checkList');
             const mk = (item, group) => {
                 const l = document.createElement('label');
-                l.innerHTML = `<input type="checkbox" id="cb_${item.id}" ${item.def ? 'checked' : ''}> <span>${item.text} <em style="color:#64748b;font-size:12px">(${group})</em></span>`;
+                if (item.sub) l.style.marginLeft = '22px';
+                l.innerHTML = `<input type="checkbox" id="cb_${item.id}" ${item.def ? 'checked' : ''}> <span>${item.sub ? '<span style="color:#64748b">Patient health summary → </span>' : ''}${item.text} <em style="color:#64748b;font-size:12px">(${group})</em></span>`;
                 return l;
             };
             REQUIRED.forEach(i => cl.appendChild(mk(i, 'required')));
             IF_AVAILABLE.forEach(i => cl.appendChild(mk(i, 'if available')));
             const lr = document.getElementById('listReq'), lo = document.getElementById('listOpt');
-            REQUIRED.forEach(i => { const d = document.createElement('div'); d.className='requirement-item'; d.textContent=i.text; lr.appendChild(d); });
+            REQUIRED.forEach(i => { const d = document.createElement('div'); d.className='requirement-item'; d.textContent=i.text; if (i.sub) { d.style.marginLeft='22px'; d.style.borderLeft='3px solid #e2e8f0'; } lr.appendChild(d); });
             IF_AVAILABLE.forEach(i => { const d = document.createElement('div'); d.className='requirement-item'; d.textContent=i.text; lo.appendChild(d); });
         }
 
@@ -1050,13 +1052,14 @@ Dr A. Referrer, General Practitioner</textarea>
             const missingOpt = IF_AVAILABLE.filter(i => !ticked(i.id));
             const n = REQUIRED.length, k = presentReq.length;
             document.getElementById('progressValue').textContent = `${k} / ${n}`;
+            document.getElementById('progressValue').style.color = k === 0 ? '#475569' : '';
             document.getElementById('progressFill').style.setProperty('--progress-deg', `${Math.round(360 * k / n)}deg`);
             const fill = (elId, items, icon, tail) => {
                 const el = document.getElementById(elId); el.innerHTML = '';
                 if (!items.length) { el.innerHTML = '<div class="finding-item"><span class="finding-text" style="color:#64748b">None</span></div>'; return; }
                 items.forEach(i => {
                     const d = document.createElement('div'); d.className = 'finding-item';
-                    d.innerHTML = `<span class="finding-icon">${icon}</span><span class="finding-text"><strong>${i.text}</strong>${tail}</span>`;
+                    d.innerHTML = `<span class="finding-icon" aria-hidden="true">${icon}</span><span class="finding-text"><strong>${i.text}</strong>${tail}</span>`;
                     el.appendChild(d);
                 });
             };
@@ -1078,8 +1081,10 @@ Dr A. Referrer, General Practitioner</textarea>
         document.getElementById('infoBtn').addEventListener('click', () => showModal('infoModal'));
         document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', function(e){ if (e.target === this) this.classList.remove('active'); }));
 
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal('infoModal'); });
         buildLists();
         goToScreen(1);
+        const gateBtn = document.querySelector('#gate .btn'); if (gateBtn) gateBtn.focus();
     </script>
 </body>
 </html>
