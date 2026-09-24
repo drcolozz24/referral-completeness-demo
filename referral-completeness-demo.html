@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Completeness Demonstration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            pointer-events: none;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .watermark-text {
+            display: block;
+            line-height: 1.4;
+        }
+
+        /* Info Icon */
+        .info-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #0066cc;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .info-icon:hover, .info-icon:active {
+            background: #0052a3;
+            transform: scale(1.1);
+        }
+
+        /* Screen Transitions */
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 13px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        /* Dashboard Screen */
+        .dashboard {
+            padding: 32px 24px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 28px;
+        }
+
+        .dashboard-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+
+        .practice-info {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8f0f7 100%);
+            border: 1px solid #d0dce6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 6px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Form Screen */
+        .form-section {
+            padding: 32px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #d0dce6;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #f0f4f8;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #0066cc;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Validation Results Screen */
+        .results-section {
+            padding: 32px 24px;
+        }
+
+        .completeness-indicator {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .circular-progress {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-circle {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
+
+        .progress-circle-bg {
+            background: conic-gradient(#e8f0f7 0deg, #e8f0f7 360deg);
+            border: 8px solid #e8f0f7;
+        }
+
+        .progress-circle-fill {
+            background: conic-gradient(#10b981 0deg, #10b981 var(--progress-deg), #e8f0f7 var(--progress-deg), #e8f0f7 360deg);
+            border: 8px solid transparent;
+        }
+
+        .progress-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .progress-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #10b981;
+            display: block;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .validation-message {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 16px;
+            background: #f0fdf4;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .validation-message.amber {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+
+        .validation-message.red {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+        .validation-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .validation-title.amber {
+            color: #f59e0b;
+        }
+
+        .validation-title.red {
+            color: #ef4444;
+        }
+
+        .findings-grid {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .finding-group {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .finding-header {
+            background: #f3f4f6;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .finding-header.green {
+            background: #ecfdf5;
+            color: #10b981;
+        }
+
+        .finding-header.amber {
+            background: #fffbeb;
+            color: #f59e0b;
+        }
+
+        .finding-header.red {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .status-badge {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .status-badge.green {
+            background: #10b981;
+        }
+
+        .status-badge.amber {
+            background: #f59e0b;
+        }
+
+        .status-badge.red {
+            background: #ef4444;
+        }
+
+        .finding-items {
+            padding: 16px;
+            background: white;
+        }
+
+        .finding-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .finding-item:not(:last-child) {
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 10px;
+        }
+
+        .finding-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .finding-text {
+            flex: 1;
+        }
+
+        .finding-text strong {
+            color: #1a1a1a;
+        }
+
+        /* Specialist Requirements Screen */
+        .requirements-section {
+            padding: 32px 24px;
+        }
+
+        .requirements-category {
+            margin-bottom: 28px;
+        }
+
+        .requirements-category-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #333;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .requirement-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .requirement-badge.mandatory {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .requirement-badge.recommended {
+            background: #fffbeb;
+            color: #f59e0b;
+        }
+
+        .requirement-list {
+            background: #f9fafb;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .requirement-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+
+        .requirement-item::before {
+            content: '◆';
+            color: #0066cc;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .citation {
+            margin-top: 24px;
+            padding: 16px;
+            background: #f0f4f8;
+            border-left: 4px solid #0066cc;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Referral Letter Screen */
+        .referral-letter {
+            padding: 32px 24px;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .letter-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 8px;
+        }
+
+        .letter-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .letter-content {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .letter-section {
+            margin-bottom: 20px;
+        }
+
+        .letter-section-title {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .letter-section-content {
+            margin-left: 12px;
+            padding-left: 12px;
+            border-left: 2px solid #e5e7eb;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover, .btn-primary:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #333;
+            border: 1.5px solid #d0dce6;
+        }
+
+        .btn-secondary:hover, .btn-secondary:active {
+            background: #e5e7eb;
+            border-color: #b0b8c6;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover, .btn-success:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-warning:hover, .btn-warning:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Modal/Dialog */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+
+            .modal-content {
+                max-width: 100%;
+            }
+
+            .header {
+                padding: 24px 16px;
+            }
+
+            .dashboard, .form-section, .results-section, .requirements-section, .referral-letter {
+                padding: 24px 16px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .tagline {
+                font-size: 12px;
+            }
+        }
+
+        /* Updated Validation Screen */
+        .validation-status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #ecfdf5;
+            color: #10b981;
+            margin-bottom: 16px;
+        }
+
+        .wait-estimate {
+            background: #f0f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 28px;
+        }
+
+        .wait-estimate-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .wait-estimate-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0066cc;
+        }
+    
+        /* --- additions for release build --- */
+        .gate { position: fixed; inset: 0; background: rgba(15,23,42,0.92); z-index: 2000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .gate-box { background:#fff; max-width:640px; width:100%; border-radius:12px; padding:28px 28px 24px; box-shadow:0 20px 60px rgba(0,0,0,.4); font-size:14px; line-height:1.55; color:#1a1a1a; max-height:90vh; overflow:auto; }
+        .gate-box h1 { font-size:20px; margin-bottom:12px; }
+        .gate-box h2 { font-size:14px; margin:16px 0 6px; text-transform:uppercase; letter-spacing:.04em; color:#444; }
+        .gate-box ul { padding-left:20px; margin:6px 0; }
+        .gate-box li { margin-bottom:5px; }
+        .gate-box .legal { font-size:12.5px; color:#333; background:#f6f7f9; border-left:3px solid #94a3b8; padding:10px 12px; margin-top:14px; }
+        .gate-box .btn { margin-top:18px; width:100%; }
+        .watermark { position:static; color:#475569; text-align:center; padding:18px 24px 22px; border-top:1px solid #e2e8f0; background:#f8fafc; }
+        .progress-value { font-size:22px !important; }
+        .watermark .name { font-weight:600; font-size:13px; }
+        .watermark .line { font-size:11px; font-weight:400; }
+        .intro { padding: 28px 24px; font-size:14.5px; line-height:1.6; }
+        .intro h2 { font-size:17px; margin:18px 0 8px; }
+        .intro p, .intro li { margin-bottom:8px; }
+        .intro ul { padding-left:20px; }
+        .fictional-tag { display:inline-block; background:#fde68a; color:#78350f; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:8px; vertical-align:middle; }
+        .check-list { display:grid; grid-template-columns:1fr; gap:6px; }
+        .check-list label { display:flex; gap:10px; align-items:flex-start; font-size:14px; padding:8px 10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; }
+        .check-list input { margin-top:3px; }
+        .src-note { font-size:12.5px; color:#475569; background:#f1f5f9; border-radius:6px; padding:10px 12px; margin-top:14px; line-height:1.5; }
+        .src-note a { color:#0066cc; }
+        .finding-text a { color:#0066cc; }
+        
+
+    </style>
+</head>
+<body>
+    <!-- ENTRY GATE: intended purpose and warning, shown before anything else runs -->
+    <div class="gate" id="gate">
+        <div class="gate-box" role="dialog" aria-labelledby="gateTitle">
+            <h1 id="gateTitle">Before you continue</h1>
+            <h2>What this is</h2>
+            <p>A small, open-source demonstration built to prompt discussion about one question: <strong>does a GP referral carry the information the receiving clinician says they need?</strong> It shows a fictional referral letter and counts which items from a published referral-criteria list are mentioned in it.</p>
+            <h2>What this is not</h2>
+            <ul>
+                <li>It is <strong>not a clinical tool</strong> and is <strong>not intended for use in the care of any person</strong>.</li>
+                <li>It is <strong>not a medical device</strong> and makes <strong>no clinical recommendation</strong>. It does not tell anyone what to order, diagnose or do.</li>
+                <li>It covers <strong>one condition, one jurisdiction, one fictional case</strong>. Nothing in it has been validated.</li>
+                <li>Do <strong>not enter real patient information</strong>. Nothing you type is stored or sent anywhere, but this page is not designed to hold it.</li>
+            </ul>
+            <div class="legal">
+                This software is provided free of charge, as is, for discussion and education. To the extent permitted by law, the author excludes all liability, <strong>including liability for negligence</strong>, for any loss arising from its use or from reliance on anything it displays. Nothing here excludes, restricts or modifies any guarantee, right or remedy that cannot lawfully be excluded under the Australian Consumer Law; to the extent such a guarantee applies, liability is limited to re-supply of the software. Clinical decisions remain entirely the responsibility of the treating clinician.
+            </div>
+            <button class="btn btn-primary" onclick="closeGate()">I understand — show me the demonstration</button>
+        </div>
+    </div>
+
+    <!-- Info Icon -->
+    <button class="info-icon" id="infoBtn" aria-label="About this demonstration">ⓘ</button>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">Referral Completeness Demonstration</div>
+            <div class="tagline">A discussion piece about what referrals carry — not a clinical tool</div>
+        </div>
+
+        <!-- SCREEN 1: Purpose and limits -->
+        <div id="screen1" class="screen active">
+            <div class="intro">
+                <h2>Purpose</h2>
+                <p>Every Australian state publishes lists of what a specialist referral should contain. No health system routinely measures whether referrals actually contain it. This page lets you see, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can argue about whether it is useful, how it should work, and what it gets wrong.</p>
+
+                <h2>How it works</h2>
+                <ul>
+                    <li>You are shown a <strong>fictional</strong> referral for adult chest pain.</li>
+                    <li>You tick which items the letter contains. The page compares your ticks against the <strong>published NSW Health referral criteria</strong> for that condition and reports what is mentioned and what is not.</li>
+                    <li>That is all it does. The rule list is visible on screen and in the source code, and is reproduced from the NSW Health page it links to.</li>
+                </ul>
+
+                <h2>Limitations, stated up front</h2>
+                <ul>
+                    <li>One condition (adult chest pain), one jurisdiction (NSW), one fictional letter. Other states' criteria are Crown copyright and are deliberately not reproduced here.</li>
+                    <li>It counts whether an item is <em>mentioned</em>, not whether it is correct, complete or clinically appropriate. A ticked box is not a clinical judgement.</li>
+                    <li>It has not been tested against real referrals and has no evidence of benefit.</li>
+                    <li>The published criteria change. This page reproduces the list as it stood on the date shown; the linked NSW page is authoritative.</li>
+                </ul>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="goToScreen(2)">Show the fictional referral</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: The fictional referral -->
+        <div id="screen2" class="screen">
+            <div class="form-section">
+                <div class="form-group">
+                    <label class="form-label">Patient <span class="fictional-tag">FICTIONAL</span></label>
+                    <div class="form-row">
+                        <div><input type="text" class="form-input" value="Mrs J. Example" disabled></div>
+                        <div><input type="text" class="form-input" value="67 F" disabled></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Referral to</label>
+                    <input type="text" class="form-input" value="Cardiology outpatients (NSW public) — adult chest pain" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Letter as written <span class="fictional-tag">FICTIONAL</span></label>
+                    <textarea class="form-textarea" rows="7" disabled>Dear Colleague,
+
+Thank you for seeing Mrs Example, 67, with three weeks of chest tightness on exertion, settling with rest. No pain at rest. Background of hypertension and type 2 diabetes. Current medications: metformin 1 g twice daily, amlodipine 10 mg daily. No known allergies. ECG today: sinus rhythm, no acute changes (tracing attached). Bloods last month: FBC and EUC normal.
+
+Provisional diagnosis: stable angina. Grateful for your assessment.
+
+Dr A. Referrer, General Practitioner</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Which of the published NSW items does this letter contain? Tick what you find.</label>
+                    <div class="check-list" id="checkList"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="runCheck()">Compare against the published list</button>
+                    <button class="btn btn-secondary" onclick="goToScreen(1)">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: Result -->
+        <div id="screen3" class="screen">
+            <div class="results-section">
+                <div class="completeness-indicator">
+                    <div class="circular-progress">
+                        <div class="progress-circle progress-circle-bg"></div>
+                        <div class="progress-circle progress-circle-fill" id="progressFill" style="--progress-deg: 0deg;"></div>
+                        <div class="progress-text">
+                            <span class="progress-value" id="progressValue">0 / 0</span>
+                            <span class="progress-label">required items mentioned</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="validation-message">
+                    <div class="validation-title">Compared against the published NSW list</div>
+                    This is a count of items mentioned. It is not an assessment of the referral's quality or of the patient, and it is not a prediction of what any service will do with it.
+                </div>
+
+                <div class="findings-grid">
+                    <div class="finding-group">
+                        <div class="finding-header green"><span class="status-badge green">✓</span> Listed as required — mentioned</div>
+                        <div class="finding-items" id="presentReq"></div>
+                    </div>
+                    <div class="finding-group">
+                        <div class="finding-header red"><span class="status-badge red">–</span> Listed as required — not mentioned</div>
+                        <div class="finding-items" id="missingReq"></div>
+                    </div>
+                    <div class="finding-group">
+                        <div class="finding-header amber"><span class="status-badge amber">·</span> Listed as "if available" — not mentioned</div>
+                        <div class="finding-items" id="missingOpt"></div>
+                    </div>
+                </div>
+
+                <div class="src-note">
+                    Items are taken from NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients — Statewide Referral Criteria</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health, reproduced under Creative Commons Attribution 4.0. For current information go to www.health.nsw.gov.au.
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="goToScreen(4)">See the full published list</button>
+                    <button class="btn btn-secondary" onclick="goToScreen(2)">Change the ticks</button>
+                    <button class="btn btn-secondary" onclick="goToScreen(1)">Start again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: The published list, reproduced with attribution -->
+        <div id="screen4" class="screen">
+            <div class="requirements-section">
+                <h2 style="font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px;">NSW Statewide Referral Criteria — adult chest pain</h2>
+                <p style="font-size:13px;color:#475569;margin-bottom:22px;">Information to include in the referral, as published by NSW Health. Reproduced here so the rule the demonstration applies is visible.</p>
+
+                <div class="requirements-category">
+                    <div class="requirements-category-title">Required <span class="requirement-badge mandatory">Published as required</span></div>
+                    <div class="requirement-list" id="listReq"></div>
+                </div>
+
+                <div class="requirements-category">
+                    <div class="requirements-category-title">If available <span class="requirement-badge recommended">Published as "if available"</span></div>
+                    <div class="requirement-list" id="listOpt"></div>
+                </div>
+
+                <div class="requirements-category">
+                    <div class="requirements-category-title">Triage categories published for this condition</div>
+                    <div class="requirement-list">
+                        <div class="requirement-item">Category 1 — new chest pain or discomfort of a probable cardiac origin, in the absence of emergency criteria — recommended to be seen within 30 calendar days</div>
+                        <div class="requirement-item">Category 2 — chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin — within 90 calendar days</div>
+                        <div class="requirement-item">Category 3 — chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation — within 365 calendar days</div>
+                    </div>
+                </div>
+
+                <div class="citation">
+                    <strong>Source:</strong> NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx" target="_blank" rel="noopener">Chest pain, discomfort and/or tightness in adult patients</a>, current as at 10 September 2026. © State of New South Wales NSW Ministry of Health. Licensed under Creative Commons Attribution 4.0. For current information go to www.health.nsw.gov.au. The page also lists emergency criteria for immediate referral to an emergency department; they are not reproduced here because this demonstration does not assess urgency.
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="goToScreen(3)">Back to the comparison</button>
+                </div>
+            </div>
+        </div>
+    <!-- Author line (watermark) -->
+    <div class="watermark" aria-label="Author">
+        <span class="watermark-text name">Dr Ferney Bernal Buitrago</span>
+        <span class="watermark-text line">Personal work. No commercial interest.</span>
+        <span class="watermark-text line">Not affiliated with, or endorsed by, any practice, health service or employer.</span>
+        <span class="watermark-text line" style="margin-top:8px;display:block;">Found a mistake? Mistakes are expected and corrections are welcome — report it through the repository's Issues page (link in the ⓘ panel). Please include no real patient information.</span>
+    </div>
+
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">About this demonstration</div>
+            <div class="modal-text">
+                Built by Dr Ferney Bernal Buitrago, a general practitioner, as personal work with no commercial interest, to generate discussion about referral information flow. It is released as open source; the source code and the accompanying written material are in the public repository linked from the page you found this on.
+                <br><br>
+                It is not a clinical tool, not a medical device, and not affiliated with, or endorsed by, any practice, health service, employer or software vendor. It has not been validated. The criteria shown are reproduced from a NSW Health web page under Creative Commons Attribution 4.0; other jurisdictions' criteria are Crown copyright and were deliberately not reproduced.
+                <br><br>
+                Feedback — especially disagreement — is the point. Use the repository's discussion page.
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="closeModal('infoModal')" style="flex: 1;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // The rule list. Reproduced from NSW Health, Statewide Referral Criteria,
+        // "Chest pain, discomfort and/or tightness in adult patients", current as at 10 September 2026.
+        // https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx
+        // © State of New South Wales NSW Ministry of Health, CC BY 4.0.
+        // Items marked def:true are ticked by default because the fictional letter above mentions them.
+        const REQUIRED = [
+            { id:'reason',   text:'Reason for referral', def:true },
+            { id:'present',  text:'Details of the presenting condition, including symptoms and their duration, and impact on activities of daily living', def:false },
+            { id:'provdx',   text:'Provisional diagnosis', def:true },
+            { id:'summary',  text:'Patient health summary (such as relevant medical history, relevant investigations, current medications and dosages, immunisations, allergies and/or adverse reactions), specifically including:', def:false },
+            { id:'mgmt',     text:'Alleviating interventions and management', def:false },
+            { id:'function', text:'Functional status assessment', def:false },
+            { id:'fbc',      text:'Full blood count', def:true },
+            { id:'euc',      text:'Electrolytes, urea and creatinine', def:true },
+            { id:'lipids',   text:'Fasting lipid profile', def:false },
+            { id:'hba1c',    text:'HbA1c (if diabetes is present or suspected)', def:false },
+            { id:'lft',      text:'Liver function tests', def:false },
+            { id:'ecg',      text:'Relevant electrocardiogram (ECG) tracings', def:true },
+            { id:'trop',     text:'Troponin (if indicated)', def:false }
+        ];
+        const IF_AVAILABLE = [
+            { id:'cvdrisk',  text:'Cardiovascular disease risk assessment', def:false },
+            { id:'famhx',    text:'Family history of sudden cardiac death or cardiac disease', def:false },
+            { id:'smoking',  text:'History of smoking, vaping, alcohol intake and drug use (including recreational drugs)', def:false },
+            { id:'covid',    text:'If symptoms may be linked to SARS COV-2 (COVID-19) infection or Long COVID-19', def:false },
+            { id:'imaging',  text:'Relevant investigation results (e.g. cardiac imaging, stress test, myocardial perfusion scan, previous cardiac surgery reports)', def:false }
+        ];
+
+        function buildLists() {
+            const cl = document.getElementById('checkList');
+            const mk = (item, group) => {
+                const l = document.createElement('label');
+                l.innerHTML = `<input type="checkbox" id="cb_${item.id}" ${item.def ? 'checked' : ''}> <span>${item.text} <em style="color:#64748b;font-size:12px">(${group})</em></span>`;
+                return l;
+            };
+            REQUIRED.forEach(i => cl.appendChild(mk(i, 'required')));
+            IF_AVAILABLE.forEach(i => cl.appendChild(mk(i, 'if available')));
+            const lr = document.getElementById('listReq'), lo = document.getElementById('listOpt');
+            REQUIRED.forEach(i => { const d = document.createElement('div'); d.className='requirement-item'; d.textContent=i.text; lr.appendChild(d); });
+            IF_AVAILABLE.forEach(i => { const d = document.createElement('div'); d.className='requirement-item'; d.textContent=i.text; lo.appendChild(d); });
+        }
+
+        function runCheck() {
+            const ticked = id => document.getElementById('cb_' + id).checked;
+            const presentReq = REQUIRED.filter(i => ticked(i.id));
+            const missingReq = REQUIRED.filter(i => !ticked(i.id));
+            const missingOpt = IF_AVAILABLE.filter(i => !ticked(i.id));
+            const n = REQUIRED.length, k = presentReq.length;
+            document.getElementById('progressValue').textContent = `${k} / ${n}`;
+            document.getElementById('progressFill').style.setProperty('--progress-deg', `${Math.round(360 * k / n)}deg`);
+            const fill = (elId, items, icon, tail) => {
+                const el = document.getElementById(elId); el.innerHTML = '';
+                if (!items.length) { el.innerHTML = '<div class="finding-item"><span class="finding-text" style="color:#64748b">None</span></div>'; return; }
+                items.forEach(i => {
+                    const d = document.createElement('div'); d.className = 'finding-item';
+                    d.innerHTML = `<span class="finding-icon">${icon}</span><span class="finding-text"><strong>${i.text}</strong>${tail}</span>`;
+                    el.appendChild(d);
+                });
+            };
+            fill('presentReq', presentReq, '✅', ' — mentioned in the letter');
+            fill('missingReq', missingReq, '⬜', ' — the published NSW list includes this; the letter does not mention it');
+            fill('missingOpt', missingOpt, '·', ' — listed by NSW as "if available"; not mentioned');
+            goToScreen(3);
+        }
+
+        function goToScreen(n) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById('screen' + n);
+            if (t) { t.classList.add('active'); window.scrollTo(0, 0); }
+        }
+        function showModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function closeGate() { document.getElementById('gate').style.display = 'none'; }
+
+        document.getElementById('infoBtn').addEventListener('click', () => showModal('infoModal'));
+        document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', function(e){ if (e.target === this) this.classList.remove('active'); }));
+
+        buildLists();
+        goToScreen(1);
+    </script>
+</body>
+</html>

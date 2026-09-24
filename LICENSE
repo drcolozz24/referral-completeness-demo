@@ -1,0 +1,51 @@
+MIT License
+
+Copyright (c) 2026 Ferney Bernal Buitrago
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---------------------------------------------------------------------------
+Additional statements
+---------------------------------------------------------------------------
+
+1. Intended purpose. The Software is a demonstration for discussion and
+   education only. It is not a clinical tool, is not a medical device, makes
+   no clinical recommendation, and is not intended for use in the care of any
+   person. It has not been validated. Do not enter real patient information.
+
+2. Negligence. To the extent permitted by law, the author excludes all
+   liability, including liability for negligence, for any loss or damage
+   arising from the use of the Software or from reliance on anything it
+   displays.
+
+3. Australian Consumer Law. Nothing in this licence excludes, restricts or
+   modifies any guarantee, right or remedy conferred by the Australian
+   Consumer Law or any other law that cannot lawfully be excluded, restricted
+   or modified. To the extent such a guarantee applies and the law permits,
+   the author's liability for a failure to comply with it is limited to
+   re-supply of the Software.
+
+4. Third-party content. The referral criteria text reproduced in the
+   Software is © State of New South Wales NSW Ministry of Health and is
+   licensed under Creative Commons Attribution 4.0, not under this MIT
+   licence. See NOTICE for the required attribution.
+
+5. Written material in the docs/ directory is licensed under Creative Commons
+   Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/),
+   © 2026 Ferney Bernal Buitrago, and is not covered by this MIT licence.

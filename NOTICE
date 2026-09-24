@@ -1,0 +1,36 @@
+NOTICE — third-party content and attributions
+
+1. NSW Health Statewide Referral Criteria
+
+   The list of information to include in a referral, and the triage
+   categories, for adult chest pain reproduced in
+   referral-completeness-demo.html are taken from:
+
+     NSW Health, "Chest pain, discomfort and/or tightness in adult patients",
+     Statewide Referral Criteria for NSW public outpatient services,
+     current as at 10 September 2026.
+     https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx
+
+   © State of New South Wales NSW Ministry of Health. For current information
+   go to www.health.nsw.gov.au.
+
+   Licensed under Creative Commons Attribution 4.0 (CC BY 4.0),
+   https://creativecommons.org/licenses/by/4.0/, per NSW Health's copyright
+   statement at https://www.health.nsw.gov.au/pages/copyright.aspx.
+
+   The text has been reproduced verbatim. The page's emergency criteria are
+   not reproduced because the demonstration does not assess urgency. NSW
+   Health has not reviewed or endorsed this demonstration.
+
+2. Criteria of other Australian jurisdictions
+
+   The Victorian Statewide Referral Criteria, Queensland Clinical
+   Prioritisation Criteria and Western Australian Referral Access Criteria are
+   Crown copyright with all rights reserved and are deliberately NOT
+   reproduced in this repository.
+
+3. Software dependencies
+
+   The demonstration page has no runtime dependencies. The test script
+   tests/test_demo.js uses Playwright (Apache-2.0), which is not distributed
+   with this repository.
