@@ -16,7 +16,7 @@ A policy analysis. Map each jurisdiction's criteria programme — Queensland's 4
 
 ## Study 2 — Can referral content be scored reliably, and does an automated scorer agree with clinicians?
 
-The instrument-validation study. A retrospective, de-identified corpus of referrals at one health service. A sample scored by two or more blinded clinician raters against the relevant criteria, with inter-rater agreement reported. The same sample scored automatically. Agreement between human and machine reported by specialty and by criterion. A 2026 review found most NLP-on-referrals work still at prototype stage and none evaluated prospectively, so a well-designed validation study is a contribution rather than a repeat.
+The instrument-validation study. A retrospective, de-identified corpus of referrals at one health service. A sample scored by two or more blinded clinician raters against the relevant criteria, with inter-rater agreement reported. The same sample scored automatically. Agreement between human and machine reported by specialty and by criterion. A 2026 review found most NLP-on-referrals work still at prototype stage and only a minority evaluated prospectively, so a well-designed validation study is a contribution rather than a repeat.
 
 - Needs: human research ethics approval, a data custodian, a corpus, a collaborator who has run a study before.
 - Time: 12–18 months. Output: a methods paper and the instrument.
@@ -44,6 +44,6 @@ An academic affiliation (for ethics sponsorship and grant eligibility); a senior
 
 ## Why now rather than later
 
-Two systematic reviews landed in this seam within a month of each other in 2026 — a proposed quality framework in the *BJGP* in May and an NLP review in *Frontiers in Health Services* in April. That is what a field looks like just before it gets busy. The measurement gap has been open for at least fifteen years; it is unlikely to stay open for another five.
+Two systematic reviews landed in this seam within a month of each other in 2026 — a proposed quality framework in the *BJGP* (2026;76(768)) and an NLP review in *Frontiers in Health Services* in April. That is what a field looks like just before it gets busy. The measurement gap has been open for at least fifteen years; it is unlikely to stay open for another five.
 
 If you are working on any of this, or want to, open a Discussion.

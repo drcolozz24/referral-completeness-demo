@@ -38,7 +38,7 @@ In August 2026 I ran six separate searches, each instructed to *break* the claim
 
 ## The framework question — a correction to my own earlier claim
 
-I previously claimed that no framework for referral quality existed. That is no longer true and I withdraw it. Osman and colleagues, *British Journal of General Practice* 2026;76(768):e562–e571 (DOI 10.3399/BJGP.2025.0304), screened 3,461 records and proposed a theoretical framework and checklist, now being piloted for local quality improvement with an initial evaluation of twenty referrals.
+I previously claimed that no framework for referral quality existed. That is no longer true and I withdraw it. Osman and colleagues, *British Journal of General Practice* 2026;76(768):e562–e571 (DOI 10.3399/BJGP.2025.0304), retrieved 3,461 records (1,830 screened after de-duplication) and proposed a theoretical framework and checklist, now being piloted for local quality improvement with an initial evaluation of twenty referrals.
 
 The same paper is the best evidence *for* the narrower claim: in their words, "there is currently no universally accepted framework for what constitutes a quality referral" and "existing referral guidance remains generalist". A framework has been proposed; nothing is routinely measured. *[Quotes to be re-verified against the paper before publication.]*
 
