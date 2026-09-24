@@ -23,5 +23,11 @@
     "History of smoking, vaping, alcohol intake and drug use (including recreational drugs)",
     "If symptoms may be linked to SARS COV-2 (COVID-19) infection or Long COVID-19",
     "Relevant investigation results (e.g. cardiac imaging, stress test, myocardial perfusion scan, previous cardiac surgery reports)"
-  ]
+  ],
+  "triage": [
+    "Category 1 — Recommended to be seen within 30 calendar days — New chest pain or discomfort of a probable cardiac origin in the absence of Emergency criteria",
+    "Category 2 — Recommended to be seen within 90 calendar days — Chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin in the absence of Emergency criteria",
+    "Category 3 — Recommended to be seen within 365 calendar days — Chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation"
+  ],
+  "note": "Required items 5-13 are published by NSW as sub-items of 'Patient health summary ... specifically including:'; they are listed flat here."
 }
