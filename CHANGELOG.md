@@ -2,7 +2,9 @@
 
 All notable changes to this repository. Dates are Australian Eastern time.
 
-## [Unreleased] — first public release candidate
+## v1.0 — 2026-09-24 — first public release
+
+Repository made public; live page enabled at https://drcolozz24.github.io/referral-completeness-demo/.
 
 ### 2026-09-24
 - Rebuilt the demonstration from an earlier private proof of concept (March 2026). Removed all references to a former company, its provisional IP applications and website; removed a dashboard showing a practice name and invented performance figures; removed the fixed, scripted results.

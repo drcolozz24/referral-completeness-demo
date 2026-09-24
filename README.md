@@ -4,7 +4,7 @@
 
 Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No commercial interest. Not affiliated with, or endorsed by, any practice, health service or employer. No software vendor has been involved.
 
-- **Try it:** open `referral-completeness-demo.html` in any browser. It loads nothing from the internet and stores nothing.
+- **Try it:** https://drcolozz24.github.io/referral-completeness-demo/ — or open `referral-completeness-demo.html` in any browser. It loads nothing from the internet and stores nothing.
 - **Argue with it:** use the Discussions tab. Disagreement is the point.
 - **Found a mistake:** open an Issue. Errors are expected and corrections are welcome — see *How mistakes are handled* below.
 
@@ -63,6 +63,7 @@ Confidence: moderate-to-high, not certain. The nearest counter-examples — NHS 
 
 ```
 referral-completeness-demo.html   the demonstration (single file, no dependencies)
+index.html                         redirect to the demonstration for the site address
 README.md                          this file
 LICENSE                            MIT for code, with an Australian Consumer Law statement
 NOTICE                             third-party content and attributions
