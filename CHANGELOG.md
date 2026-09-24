@@ -2,6 +2,9 @@
 
 All notable changes to this repository. Dates are Australian Eastern time.
 
+## 2026-09-25
+- docs/01: removed an incorrect statement that an enquiry to accrediting bodies was under way; replaced with a description of the RACGP referral standard (GP2.3) and guide. docs/02: RACGP standard and guide added as a sourced entry. docs/04: study 1 "killed by" reworded to remove the same implication.
+
 ## v1.0 — 2026-09-24 — first public release
 
 Repository made public; live page enabled at https://drcolozz24.github.io/referral-completeness-demo/.
