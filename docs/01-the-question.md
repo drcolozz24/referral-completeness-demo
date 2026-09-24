@@ -44,11 +44,11 @@ The same paper is the best evidence *for* the narrower claim: in their words, "t
 
 I also previously circulated two figures — "only 2 papers in PubMed address referral quality frameworks" and "only 6 apply NLP to referral letters" — that were search artefacts and wrong by orders of magnitude. A 2026 review in *Frontiers in Health Services* (Ye et al.) identified 7,628 records on NLP and referrals before narrowing to ten. Validated referral-quality scoring instruments exist from Canada (2011), Norway (2015) and New Zealand (2014). None of that contradicts the claim above; all of it contradicts the way I first put it.
 
-## One hole still open — in Australia
+## The profession's own standard
 
-RACGP Standards for general practices, criterion GP2.3, indicator B: *"Our practice's referral letters are legible and contain all required information."* That is nearly the construct claimed unmeasured, and it is assessed at every accreditation, roughly triennially, across some 6,000 practices, tied to Practice Incentives Program eligibility.
+Australia also has a profession-wide content standard, separate from the state criteria. The RACGP *Standards for general practices* (5th edition), criterion GP2.3, indicator B, reads: *"Our practice's referral letters are legible and contain all required information"*, and lists what a referral letter must contain — referrer and practice details, patient identifiers, the purpose of the referral, enough history, examination findings and current management for the receiving provider to give appropriate care, allergies and current medicines, and the setting referred to. It is assessed at each practice's accreditation. The RACGP's guide *Referring to other medical specialists* (2019) sets out the same requirements with worked examples.
 
-It is a binary, per-practice surveyor judgement, and I know of no aggregate figure. But if either accrediting body (AGPAL or Quality Practice Accreditation) holds aggregate non-compliance data on GP2.3 B, that is a full counter-example sitting in Australia. I am asking them in writing. Either answer is useful.
+This is the content standard for every accredited general practice in the country. It is included here as part of what exists; whether and how results against it are aggregated is not something this document addresses.
 
 ## Limits of this search
 

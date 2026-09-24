@@ -12,7 +12,7 @@ A policy analysis. Map each jurisdiction's criteria programme — Queensland's 4
 
 - Needs: nothing not already held. No data access, no ethics approval, no funding.
 - Time: 3–6 months. Output: an analysis piece for an Australian general-practice or medical journal.
-- Killed by: an accrediting body confirming it holds aggregate GP2.3 compliance data, or a state confirming a recurring internal adherence report. Close that first.
+- Killed by: a published, recurring adherence measure turning up — for example a state or accreditation body already reporting one.
 
 ## Study 2 — Can referral content be scored reliably, and does an automated scorer agree with clinicians?
 
