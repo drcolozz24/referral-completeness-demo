@@ -1,0 +1,27 @@
+{
+  "url": "https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx",
+  "fetched_on": "2026-09-24",
+  "current_as_at": "10 September 2026",
+  "required": [
+    "Reason for referral",
+    "Details of the presenting condition, including symptoms and their duration, and impact on activities of daily living",
+    "Provisional diagnosis",
+    "Patient health summary (such as relevant medical history, relevant investigations, current medications and dosages, immunisations, allergies and/or adverse reactions), specifically including:",
+    "Alleviating interventions and management",
+    "Functional status assessment",
+    "Full blood count",
+    "Electrolytes, urea and creatinine",
+    "Fasting lipid profile",
+    "HbA1c (if diabetes is present or suspected)",
+    "Liver function tests",
+    "Relevant electrocardiogram (ECG) tracings",
+    "Troponin (if indicated)"
+  ],
+  "if_available": [
+    "Cardiovascular disease risk assessment",
+    "Family history of sudden cardiac death or cardiac disease",
+    "History of smoking, vaping, alcohol intake and drug use (including recreational drugs)",
+    "If symptoms may be linked to SARS COV-2 (COVID-19) infection or Long COVID-19",
+    "Relevant investigation results (e.g. cardiac imaging, stress test, myocardial perfusion scan, previous cardiac surgery reports)"
+  ]
+}
