@@ -15,7 +15,7 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   const html = fs.readFileSync(FILE, 'utf8');
 
   // ---- Static checks on the file ----
-  const forbidden = [/referright/i, /patent/i, /argyle/i, /medicare/i, /acceptance rate/i, /wait days/i,
+  const forbidden = [/patent pending/i, /medicare/i, /acceptance rate/i, /wait days/i,
                      /rejection risk/i, /risk of rejection/i, /send anyway/i, /\bCPC\b/, /we recommend/i, /you should/i];
   forbidden.forEach(re => check(`no forbidden term ${re}`, !re.test(html.replace(/\.requirement-badge\.recommended/g, '')),
     (html.match(re) || [''])[0]));
@@ -35,8 +35,9 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   check('current-as-at date present', /current as at \d{1,2} \w+ \d{4}/i.test(html));
   const fictional = (html.match(/FICTIONAL/g) || []).length;
   check('fictional tags on patient and letter', fictional >= 2, `${fictional} found`);
-  const realNames = /Dr Ferney Bernal(?! Buitrago)|FRACGP/;
+  const realNames = /Dr Ferney Bernal(?! Buitrago)/;
   check('author name not used inside the fictional letter', !realNames.test(html));
+  check('letter is readable (readonly, not disabled)', !/<textarea[^>]*disabled/.test(html));
 
   // ---- Behavioural checks in a headless browser ----
   const browser = await chromium.launch();

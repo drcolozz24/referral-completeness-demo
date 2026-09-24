@@ -11,7 +11,8 @@ Usage:
     "fetched_on": "YYYY-MM-DD",
     "current_as_at": "10 September 2026",          # the date NSW prints on the page
     "required": ["Reason for referral", ...],       # verbatim bullets, in page order
-    "if_available": ["Cardiovascular disease risk assessment", ...]
+    "if_available": ["Cardiovascular disease risk assessment", ...],
+    "triage": ["Category 1 — Recommended to be seen within 30 calendar days — <text>", ...]   # optional
   }
 
 The script extracts the REQUIRED / IF_AVAILABLE arrays from the demo's <script>, normalises
@@ -69,6 +70,9 @@ def main():
     diff = False
     diff |= compare('REQUIRED', extract_array(demo, 'REQUIRED'), page['required'], out)
     diff |= compare('IF AVAILABLE', extract_array(demo, 'IF_AVAILABLE'), page['if_available'], out)
+    if 'triage' in page:
+        demo_triage = re.findall(r'<div class="requirement-item">(Category \d — .*?)</div>', demo)
+        diff |= compare('TRIAGE CATEGORIES', demo_triage, page['triage'], out)
     m = re.search(r'current as at (\d{1,2} \w+ \d{4})', demo, re.I)
     demo_date = m.group(1) if m else None
     page_date = page.get('current_as_at')
