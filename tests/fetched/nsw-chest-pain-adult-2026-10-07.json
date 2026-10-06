@@ -1,0 +1,111 @@
+{
+  "schema": 2,
+  "url": "https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx",
+  "fetched_on": "2026-10-07",
+  "source_method": "Raw HTML downloaded from the live page and parsed by tests/fetch_nsw.py.",
+  "raw_sha256": "c848406bc000662b284d01664300d0e17e2c539bf99345ac232565736588feee",
+  "current_as_at": "10 September 2026",
+  "headings": [
+    "Chest pain, discomfort and/or tightness in adult patients",
+    "Emergency",
+    "Criteria to access public outpatient services",
+    "Information to include within a referral",
+    "Required",
+    "If available",
+    "Important information for referring health professionals",
+    "Additional cardiology adult conditions"
+  ],
+  "emergency": {
+    "intro": "If any of the following are suspected please seek emergency medical advice or refer the patient to the emergency department (via ambulance if necessary):",
+    "items": [
+      {
+        "text": "Any of the following features occurring within the past 72 hours:",
+        "children": [
+          "Ischaemic chest pain or acute coronary syndrome (ACS) symptoms lasting > 10 minutes",
+          "Recurrent chest pain or ACS symptoms new at rest or on minimal exertion",
+          "Severe or ongoing chest pain or cardiac symptoms indicative of an ACS (e.g. chest, jaw, neck and/or shoulder discomfort, shortness of breath, fatigue, nausea, diaphoresis or vomiting)"
+        ]
+      },
+      {
+        "text": "Chest pain associated with any of the following features:",
+        "children": [
+          "Complete heart block",
+          "Heart failure or suspected pulmonary oedema",
+          "New left bundle branch block",
+          "Severe dyspnoea or respiratory rate > 30 per minute",
+          "ST elevation or depression",
+          "Systolic blood pressure < 90 mmHg",
+          "Syncope or pre-syncope",
+          "Tachycardia (i.e. > 120 bpm)"
+        ]
+      },
+      {
+        "text": "If high probability of angina, and/or ACS symptoms are unstable or poorly controlled"
+      },
+      {
+        "text": "Suspected aortic dissection, pulmonary embolism, pneumothorax or oesophageal rupture"
+      }
+    ],
+    "note": "a high level of suspicion for ischaemic heart disease is required for people who identify as Aboriginal and/or Torres Strait Islander, South Asian and have had recent coronary intervention or have known coronary disease"
+  },
+  "required": [
+    {
+      "text": "Reason for referral"
+    },
+    {
+      "text": "Details of the presenting condition, including symptoms and their duration, and impact on activities of daily living"
+    },
+    {
+      "text": "Provisional diagnosis"
+    },
+    {
+      "text": "Patient health summary (such as relevant medical history, relevant investigations, current medications and dosages, immunisations, allergies and/or adverse reactions), specifically including:",
+      "children": [
+        "Alleviating interventions and management",
+        "Functional status assessment",
+        "Full blood count",
+        "Electrolytes, urea and creatinine",
+        "Fasting lipid profile",
+        "HbA1c (if diabetes is present or suspected)",
+        "Liver function tests",
+        "Relevant electrocardiogram (ECG) tracings",
+        "Troponin (if indicated)"
+      ]
+    }
+  ],
+  "if_available": [
+    {
+      "text": "Cardiovascular disease risk assessment",
+      "note": "Note: refer to the Australian guideline and calculator for assessing and managing cardiovascular risk resource"
+    },
+    "Family history of sudden cardiac death or cardiac disease",
+    "History of smoking, vaping, alcohol intake and drug use (including recreational drugs)",
+    "If symptoms may be linked to SARS COV-2 (COVID-19) infection or Long COVID-19",
+    "Relevant investigation results (e.g. cardiac imaging, stress test, myocardial perfusion scan, previous cardiac surgery reports)"
+  ],
+  "triage": [
+    {
+      "category": "Category 1",
+      "timeframe": "Recommended to be seen within 30 calendar days",
+      "criteria": "New chest pain or discomfort of a probable cardiac origin in the absence of Emergency criteria"
+    },
+    {
+      "category": "Category 2",
+      "timeframe": "Recommended to be seen within 90 calendar days",
+      "criteria": "Chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin in the absence of Emergency criteria"
+    },
+    {
+      "category": "Category 3",
+      "timeframe": "Recommended to be seen within 365 calendar days",
+      "criteria": "Chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation"
+    }
+  ],
+  "extra_text": {
+    "emergency": [],
+    "required": [],
+    "if_available": [],
+    "important_information": [
+      "If there is a change to a patient’s condition while waiting for their appointment, referring health professionals may further investigate and manage the situation, or send an updated referral to the outpatient service. Where there are significant concerns about a patient's condition, referring health professionals may check HealthPathways for urgent/same day advice or contact the relevant clinical team."
+    ]
+  }
+}
