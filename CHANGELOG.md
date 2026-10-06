@@ -4,6 +4,11 @@ All notable changes to this repository. Dates are Australian Eastern time.
 
 ## Unreleased — changes since v1.0 (to be tagged v1.1 once reviewed and merged)
 
+### 2026-10-07
+- **First run of the monthly workflow.** It reached the NSW page from GitHub Actions and recorded its outcome as designed, but the outcome was "could not run": the parser, written against a mock-up, could not read the Emergency section or the third triage category (the NSW page nests lists directly inside lists and contains zero-width characters). `tests/fetch_nsw.py` corrected against the page's real HTML, saved from Chrome by the author.
+- **First character-for-character check** against that HTML: Required list, If-available list, triage categories and date identical to the demo. Snapshot added (`nsw-chest-pain-adult-2026-10-07-saved-page.json`), now including the "Important information" paragraph.
+- **Omission found and disclosed.** On the NSW page, "Cardiovascular disease risk assessment" carries a note: "refer to the Australian guideline and calculator for assessing and managing cardiovascular risk resource". The earlier snapshots, taken through an AI text-extraction tool, had dropped it, so the earlier "consistent" results did not cover it. The demo does not reproduce the note; the page and NOTICE now say so, the checker lists such notes, fails if the page stops saying so, and reports any change to them.
+
 ### 2026-10-06
 - **Monthly check record.** The scheduled check on 1 October 2026 could not run (the fetch needed an approval nobody was present to give). A check run by hand on 6 October 2026 found the Required list, the If-available list, the three triage categories and the date identical to the NSW page. Both outcomes, and the 24 September alignment, are now recorded in `tests/fetched/CHECK-LOG.md`; a 6 October snapshot was added, which for the first time records NSW's Emergency section and page headings. The README previously said each outcome was recorded in this changelog; it was not, and the README now points to the log.
 - **Second independent audit** (6 October 2026, by an AI agent given the repository and four parameters — autonomy, consistency, clinical appropriateness, truthfulness — and none of the first reviewer's conclusions; not a human review). Findings applied:

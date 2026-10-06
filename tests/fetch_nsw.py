@@ -38,13 +38,24 @@ KNOWN_HEADINGS = ['Emergency', 'Criteria to access public outpatient services',
                   'Additional cardiology adult conditions']
 
 
+BR = chr(0)   # marks a line break inside a list item
+
+ZERO_WIDTH = {0x200b: None, 0x200c: None, 0x200d: None, 0x2060: None, 0xfeff: None}
+
+
 def clean(s):
-    return re.sub(r'\s+', ' ', s.replace(' ', ' ')).strip()
+    """Collapse whitespace. Non-breaking spaces become spaces; zero-width characters (which the
+    NSW page scatters through headings and table cells) are removed."""
+    return re.sub(r'\s+', ' ', s.translate(ZERO_WIDTH).replace(chr(0xa0), ' ')).strip()
 
 
 class Blocks(HTMLParser):
     """Turn the page into an ordered list of blocks:
-       ('h', text) heading, ('li', depth, text) list item, ('row', [cells]) table row, ('p', text)."""
+       ('h', text) heading, ('li', depth, text, note) list item, ('row', [cells]) table row,
+       ('p', text). depth is how many lists the item sits inside: NSW nests a <ul> directly
+       inside a <ul>, not inside the <li>, so depth comes from the lists, not the items.
+       note is any text after a line break within an item (NSW attaches "Note: ..." to an
+       item that way), or ''."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -65,14 +76,28 @@ class Blocks(HTMLParser):
     def flush_li(self):
         """Emit the text gathered so far for the innermost open <li> (its own text, not its children's)."""
         if self.li_stack:
-            t = clean(''.join(self.li_stack[-1])); self.li_stack[-1] = []
+            raw = ''.join(self.li_stack[-1]); self.li_stack[-1] = []
+            head, _, tail = raw.partition(BR)
+            t, note = clean(head), clean(tail.replace(BR, ' '))
+            if not t:
+                t, note = note, ''
             if t:
-                self.blocks.append(('li', len(self.li_stack), t))
+                self.blocks.append(('li', max(1, self.list_depth), t, note))
 
     def handle_starttag(self, tag, attrs):
         if tag in SKIP:
             self.skip += 1; return
         if self.skip:
+            return
+        if tag == 'br':
+            if self.heading is not None:
+                self.heading.append(' ')
+            elif self.cell is not None:
+                self.cell.append(' ')
+            elif self.li_stack:
+                self.li_stack[-1].append(BR)
+            else:
+                self.buf.append(' ')
             return
         if tag in ('ul', 'ol'):
             self.flush_li() if self.li_stack else self.flush_p()
@@ -140,17 +165,19 @@ def section(blocks, heading, stop_at):
 
 
 def nested(items):
-    """[('li', depth, text), ...] -> [{'text':..., 'children':[...]}, ...] relative to the shallowest depth."""
+    """[('li', depth, text, note), ...] -> [{'text':..., 'note':..., 'children':[...]}, ...] relative to the shallowest depth."""
     lis = [b for b in items if b[0] == 'li']
     if not lis:
         return []
     top = min(b[1] for b in lis)
     out = []
-    for _, depth, text in lis:
+    for _, depth, text, note in lis:
         if depth == top or not out:
             out.append({'text': text})
+            if note:
+                out[-1]['note'] = note
         else:
-            out[-1].setdefault('children', []).append(text)
+            out[-1].setdefault('children', []).append(text if not note else f'{text} [{note}]')
     return out
 
 
@@ -184,20 +211,22 @@ def parse(html):
     req_blocks = section(blocks, 'Required', KNOWN_HEADINGS)
     opt_blocks = section(blocks, 'If available', None)
     required = nested(req_blocks)
-    if_available = [i['text'] for i in nested(opt_blocks)]
+    if_available = [i if 'note' in i else i['text'] for i in nested(opt_blocks)]
     # Any other paragraph text inside the watched sections, so that an added sentence
     # (a second note, a new instruction) is not silently dropped.
-    used = {emergency['intro']} | {t for t in paras if t.lower().startswith('note')}
-    used_once = set()
-    emer_extra = []
+    note_para = next((t for t in paras if t.lower().startswith('note')), None)
+    emer_extra, seen = [], set()
     for t in paras:
-        if t in used and t not in used_once and (t == emergency['intro'] or t == next((x for x in paras if x.lower().startswith('note')), None)):
-            used_once.add(t); continue
+        if t in (emergency['intro'], note_para) and t not in seen:
+            seen.add(t); continue
         emer_extra.append(t)
     extra_text = {
         'emergency': emer_extra,
         'required': [b[1] for b in req_blocks if b[0] == 'p'],
         'if_available': [b[1] for b in opt_blocks if b[0] == 'p'],
+        'important_information': [b[1] if b[0] == 'p' else b[2] for b in
+                                  section(blocks, 'Important information for referring health professionals', None)
+                                  if b[0] in ('p', 'li')],
     }
     if not required:
         problems.append('Required list not found')

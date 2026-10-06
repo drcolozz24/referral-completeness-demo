@@ -30,7 +30,10 @@ What is compared — literally, character for character:
   - The "current as at" date: every place the demo, README.md and NOTICE write "as at <date>"
     must equal the date on the NSW page, and it must appear in the demo file at least three
     times (two on screen, one in the code comment). A date written some other way is not seen.
-  - With --previous: the NSW page's headings and Emergency section, snapshot against snapshot.
+  - Notes that NSW attaches to an item (for example a "Note: refer to ..." line under it) are
+    listed; the demo does not reproduce them and must say so.
+  - With --previous: the NSW page's headings, Emergency section, other text in the watched
+    sections and item notes, snapshot against snapshot.
     The demo does not reproduce these, so a change is reported for the author's review.
 
 A difference in case, spacing, dash type or a trailing full stop is reported as CHARACTER-LEVEL
@@ -93,6 +96,32 @@ def snapshot_list(entries, schema):
             out.append((e['text'], False))
             out.extend((c, True) for c in e.get('children', []))
     return out
+
+
+def item_notes(page):
+    """Notes NSW attaches to list items (text after a line break inside the item)."""
+    out = []
+    for key in ('required', 'if_available'):
+        for e in page.get(key, []):
+            if isinstance(e, dict) and e.get('note'):
+                out.append(f"{key}: {e['text']} -> {e['note']}")
+    return out
+
+
+NOTES_DISCLOSURE = 'Notes that NSW attaches to individual items are not reproduced'
+
+
+def check_notes(demo, page, out):
+    notes = item_notes(page)
+    if not notes:
+        return False
+    out.append('\n== NOTES ATTACHED TO ITEMS ON THE NSW PAGE (the demo does not reproduce these) ==')
+    out.extend('  ' + n for n in notes)
+    if NOTES_DISCLOSURE in demo:
+        out.append('  the demo states that such notes are not reproduced: yes')
+        return False
+    out.append(f'  the demo does not state this. Expected the sentence: "{NOTES_DISCLOSURE}"')
+    return True
 
 
 def snapshot_triage(entries):
@@ -201,10 +230,10 @@ def compare_previous(page, prev, out):
     out.append(f"\n== NSW PAGE vs PREVIOUS SNAPSHOT ({prev.get('fetched_on', '?')}) — sections the demo does not reproduce ==")
     def extra(s):
         e = s.get('extra_text')
-        return None if e is None else [f'{k}: {t}' for k in sorted(e) for t in e[k]]
+        return None if e is None else [f'{k}: {t}' for k in sorted(e) for t in e[k]] + item_notes(s)
     for key, label, getter in (('headings', 'HEADINGS', lambda s: s.get('headings')),
                                ('emergency', 'EMERGENCY SECTION', lambda s: flat_emergency(s.get('emergency'))),
-                               ('extra_text', 'OTHER TEXT IN THE EMERGENCY, REQUIRED AND IF-AVAILABLE SECTIONS', extra)):
+                               ('extra_text', 'OTHER TEXT IN THE WATCHED SECTIONS, AND NOTES ATTACHED TO ITEMS', extra)):
         now, before = getter(page), getter(prev)
         if now is None:
             out.append(f'  {label}: not recorded in the current snapshot — NOT CHECKED')
@@ -257,6 +286,7 @@ def main():
     else:
         diff |= compare('TRIAGE CATEGORIES', [(t, False) for t in demo_triage],
                         [(t, False) for t in snapshot_triage(page['triage'])], out)
+    diff |= check_notes(demo, page, out)
     diff |= check_dates(args[0], demo, page.get('current_as_at'), out)
     if prev is not None:
         diff |= compare_previous(page, prev, out)
