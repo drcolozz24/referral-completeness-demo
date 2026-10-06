@@ -18,21 +18,34 @@ NOTICE — third-party content and attributions
    https://creativecommons.org/licenses/by/4.0/, per NSW Health's copyright
    statement at https://www.health.nsw.gov.au/pages/copyright.aspx.
 
-   The text has been reproduced verbatim, with the nine sub-items of
-   "Patient health summary" listed and counted individually. The page's
-   emergency criteria are
-   not reproduced because the demonstration does not assess urgency. NSW
+   Changes made (CC BY 4.0, section 3(a)(1)(B)): the wording is
+   reproduced unchanged. The nine sub-items of "Patient health summary"
+   are listed and counted individually. NSW publishes the triage
+   categories as a table; they are shown one category to a line, with
+   dashes between the columns. The page's emergency criteria are not
+   reproduced because the demonstration does not assess urgency. NSW
    Health has not reviewed or endorsed this demonstration.
+
+   Dated snapshots of the same text, including the emergency criteria and
+   the page headings, are kept in tests/fetched/ for the monthly
+   consistency check, under the same licence and attribution.
 
 2. Criteria of other Australian jurisdictions
 
    The Victorian Statewide Referral Criteria, Queensland Clinical
    Prioritisation Criteria and Western Australian Referral Access Criteria are
-   Crown copyright with all rights reserved and are deliberately NOT
-   reproduced in this repository.
+   not published under a licence that permits reproduction here, and are
+   deliberately NOT reproduced in this repository. What each site's
+   copyright statement said when read on 6 October 2026 is set out, with
+   links, in docs/02-what-already-exists.md.
 
 3. Software dependencies
 
    The demonstration page has no runtime dependencies. The test script
    tests/test_demo.js uses Playwright (Apache-2.0), which is not distributed
-   with this repository.
+   with this repository; package.json names the version to install.
+
+4. Authorship
+
+   Created by Dr Ferney Bernal Buitrago with AI assistance. See the
+   authorship note in README.md.

@@ -40,7 +40,7 @@ In August 2026 I ran six separate searches, each instructed to *break* the claim
 
 I previously claimed that no framework for referral quality existed. That is no longer true and I withdraw it. Osman and colleagues, *British Journal of General Practice* 2026;76(768):e562–e571 (DOI 10.3399/BJGP.2025.0304), retrieved 3,461 records (1,830 screened after de-duplication) and proposed a theoretical framework and checklist, now being piloted for local quality improvement with an initial evaluation of twenty referrals.
 
-The same paper is the best evidence *for* the narrower claim: in their words, "there is currently no universally accepted framework for what constitutes a quality referral" and "existing referral guidance remains generalist". A framework has been proposed; nothing is routinely measured. *[Quotes to be re-verified against the paper before publication.]*
+The same paper is the best evidence *for* the narrower claim: in their words, "there is currently no universally accepted framework for what constitutes a quality referral" and "existing referral guidance remains generalist". A framework has been proposed; nothing is routinely measured. *[Both quotations, the record counts and the citation were checked against the [article page](https://bjgp.org/content/76/768/e562) on 6 October 2026, through a tool that extracts the page text: the first sentence is in the abstract, the second in the introduction.]*
 
 I also previously circulated two figures — "only 2 papers in PubMed address referral quality frameworks" and "only 6 apply NLP to referral letters" — that were search artefacts and wrong by orders of magnitude. A 2026 review in *Frontiers in Health Services* (Ye et al.) identified 7,628 records on NLP and referrals before narrowing to ten. Validated referral-quality scoring instruments exist from Canada (2011), Norway (2015) and New Zealand (2014). None of that contradicts the claim above; all of it contradicts the way I first put it.
 
@@ -56,7 +56,7 @@ This is the content standard for every accredited general practice in the countr
 - Languages searched natively: Danish, Norwegian, Swedish, Finnish, Dutch, German, Italian, Spanish, some Japanese. Not searched: Hebrew, Korean, Traditional Chinese, Arabic, Portuguese, Polish. A null result from Israel, Korea, Taiwan or Portugal is weak evidence; Portugal's national referral system records structured rejection reasons and should be treated as unexamined.
 - Internal dashboards are invisible from outside. The NHS e-RS dashboard proves a national weekly rejection metric can exist and be unseen. Any system coding rejection reasons internally would not be found this way.
 - Nordic and Dutch quality registries (~230) were checked at index level only.
-- Quotations were extracted by an automated summarising layer and must be re-verified character by character against primary sources before this appears in a manuscript. The load-bearing ones are the IIF indicator specification, the Osman abstract, and the New Zealand statement.
+- Quotations and figures were extracted by an automated summarising layer. The two Osman quotations have since been checked against the article page (6 October 2026). The rest have not been re-checked since the original searches, and should be read on that footing: the load-bearing ones are the IIF indicator specification and the New Zealand statement. All must be verified character by character against primary sources before any of this appears in a manuscript.
 
 ## What would change my mind
 

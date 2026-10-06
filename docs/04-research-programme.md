@@ -36,7 +36,7 @@ The question that justifies the others, and the largest real gap: no Australian 
 
 - Needs: data linkage, competitive funding, a multi-institution team. Not something a practising GP does alone.
 - Time: 3–5 years. Output: the evidence the field lacks.
-- Killed by: finding no association — which would be the most important result of all, because it would tell four state health departments that their criteria programmes have no measurable patient benefit.
+- Killed by: finding no association — which would be the most important result of all, because it would tell the state health departments that run criteria programmes that those programmes have no measurable patient benefit.
 
 ## What any of this needs that I don't currently have
 

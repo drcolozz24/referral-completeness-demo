@@ -6,7 +6,7 @@
 
 ## What I set out to do
 
-In March 2026 I formed a small company to build a tool that would check a GP's referral against the relevant specialist criteria before it was sent — flag what was missing, estimate the chance of rejection, and let the GP fix it. I filed provisional patents, wrote a grant application, built three browser prototypes and a Python one, drafted surveys, and approached practice-software vendors and health-service executives. Active work ran from early March to mid-April. I then took a clinical post in another state, and the project went quiet without anyone — including me — recording that it had.
+In March 2026 I formed a small company, ReferRight, to build a tool that would check a GP's referral against the relevant specialist criteria before it was sent — flag what was missing, estimate the chance of rejection, and let the GP fix it. I filed provisional patents, wrote a grant application, built three browser prototypes and a Python one, drafted surveys, and approached practice-software vendors and health-service executives. Active work ran from early March to mid-April. I then took a clinical post in another state, and the project went quiet without anyone — including me — recording that it had.
 
 In August 2026 I commissioned three pieces of work on my own files: an independent audit of the folder, an adversarial review instructed to find the competitor and the prior art, and an attempt to falsify the project's central research claim. On the strength of them I closed the project the same day. Total spend, about $2,600.
 
