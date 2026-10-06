@@ -1,0 +1,28 @@
+# Runs both checks on every push and pull request.
+# Agent 1: the page tests. Agent 2: the demo against the newest NSW snapshot in tests/fetched/.
+name: tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright (pinned in package.json)
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Agent 1 — page tests
+        run: node tests/test_demo.js referral-completeness-demo.html
+      - name: Agent 2 — demo against the newest NSW snapshot
+        run: |
+          latest=$(ls tests/fetched/nsw-chest-pain-adult-*.json | sort | tail -n 1)
+          echo "Newest snapshot: $latest"
+          python3 tests/check_criteria.py referral-completeness-demo.html "$latest"

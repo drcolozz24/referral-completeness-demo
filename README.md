@@ -2,7 +2,7 @@
 
 **A small, open-source demonstration built to prompt discussion about one question: does a GP referral carry the information the receiving clinician says they need?**
 
-Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No commercial interest. Not affiliated with, or endorsed by, any practice, health service or employer. No software vendor has been involved.
+Created by Dr Ferney Bernal Buitrago, general practitioner, with AI assistance. Personal work. No commercial interest: the aim is to generate interest in how referrals are checked, and to give clinicians something concrete to test, criticise and improve. Not affiliated with, or endorsed by, any practice, health service or employer. No software vendor has been involved.
 
 - **Try it:** https://drcolozz24.github.io/referral-completeness-demo/ — or open `referral-completeness-demo.html` in any browser. It loads nothing from the internet and stores nothing.
 - **Argue with it:** use the Discussions tab. Disagreement is the point.
@@ -12,7 +12,7 @@ Built by Dr Ferney Bernal Buitrago, general practitioner. Personal work. No comm
 
 ## Goals
 
-1. **Make one thing visible.** Every Australian state publishes lists of what a specialist referral should contain. As far as I could find, no health system routinely measures whether referrals actually contain it. This page shows, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can see it and argue about it.
+1. **Make one thing visible.** At least five Australian states publish lists of what a specialist referral should contain. As far as I could find, no health system routinely measures whether referrals actually contain it. This page shows, for one fictional case, what such a check looks like — so that clinicians, patients and people who build health software can see it and argue about it.
 2. **Invite disagreement from people who know.** GPs, specialists, triage nurses, practice managers, patients, and people who build the software GPs use. Is a check like this useful? Where would it sit? What does it get wrong? What would it miss?
 3. **Put the question on the record.** The written material in `docs/` sets out what was searched, what was found, and the narrower question that survived an attempt to disprove it.
 
@@ -32,11 +32,11 @@ The rule list is visible on screen and in the source code, and is reproduced ver
 
 Stated here and on the page itself, before it runs.
 
-- **One condition, one jurisdiction, one fictional letter.** Adult chest pain, NSW public outpatient criteria. Other states' criteria are Crown copyright and are deliberately not reproduced.
+- **One condition, one jurisdiction, one fictional letter.** Adult chest pain, NSW public outpatient criteria. Other states' criteria are not published under an open licence and are deliberately not reproduced (see `docs/02-what-already-exists.md` for what each state's site says).
 - **The reader does the ticking.** The software does not read or interpret the letter. This is deliberate: it keeps the page honest about what it can do and keeps it clear of anything that could be mistaken for software analysing clinical information.
 - **It counts mentions, not quality.** A ticked box means an item is mentioned, not that it is correct, complete or clinically appropriate.
 - **Nothing has been validated.** It has not been tested against real referrals and has no evidence of benefit.
-- **Published criteria change.** The page reproduces the NSW list as it stood on the date shown. The linked NSW page is authoritative. A monthly automated check compares the two (see below).
+- **Published criteria change.** The page reproduces the NSW list as it stood on the date shown. The linked NSW page is authoritative. A monthly check is set up to compare the two; its outcomes, including checks that could not run, are recorded in `tests/fetched/CHECK-LOG.md` (see below).
 - **Most presentations have no published criteria at all.** A complaint that is not on a state's list cannot be checked against anything, because nothing agreed exists to check it against. That absence is part of what this demonstration is meant to make visible.
 
 ## How mistakes are handled
@@ -44,12 +44,14 @@ Stated here and on the page itself, before it runs.
 Mistakes are expected. The protection is not the absence of errors but making them easy to find, easy to report and quick to correct, in public.
 
 1. **Provenance on every rule.** Each list carries its source link, the "current as at" date printed on the source page, and the licence — on screen and in the code. Anyone can check any item against the source in under a minute.
-2. **Dated releases.** Every version is tagged; `CHANGELOG.md` records what changed and when.
+2. **Dated releases.** Releases are tagged; `CHANGELOG.md` records what changed and when, including changes made between releases.
 3. **A visible path to report errors.** The Issues tab, and a line on the page itself.
 4. **A correction rule.** A confirmed error is corrected in the next release and recorded in the changelog; if it was material, the page notes what changed.
-5. **Two automated checks**, plus an independent audit of the release before first publication (findings recorded in `CHANGELOG.md`).
-   - `tests/test_demo.js` — opens the page in a headless browser and runs 46 checks: no external resources, no storage, the entry warning present, attribution present, the count correct for the default, all-ticked and none-ticked states, every screen and button working, no script errors, no horizontal overflow at phone width on the letter screen. Run: `node tests/test_demo.js referral-completeness-demo.html`.
-   - `tests/check_criteria.py` — compares the demo's rule data and triage wording, item by item, against a fetched copy of the NSW page, and reports any reworded, missing or extra item and any change of date. Run: `python3 tests/check_criteria.py referral-completeness-demo.html tests/fetched/<latest>.json`. The author runs this monthly against a fresh fetch of the live NSW page (automated outside this repository); the outcome is recorded in `CHANGELOG.md`.
+5. **Two checks, set up to run in GitHub Actions on every push** (`.github/workflows/tests.yml`, added 6 October 2026 and not yet run when added), plus an independent audit before first publication and a second on 6 October 2026 (findings recorded in `CHANGELOG.md`). The 6 October audit was carried out by an AI agent, not by a human reviewer.
+   - `tests/test_demo.js` — reads the file and opens it in a headless browser, printing one line per check. It checks that the source contains no external scripts, stylesheets, network calls or storage calls, and that no network request is made when the page runs; that the entry warning, attribution, licence link, credit line and statement of changes are present; that the default ticks are the expected five and the count is correct for the default, all-ticked and none-ticked states; that every screen and every navigation button works; that there are no script errors; and that there is no horizontal overflow at phone width on any of the four screens. It also compares the wording the page displays with the newest snapshot in `tests/fetched/`. Run: `npm install`, `npx playwright install chromium`, then `node tests/test_demo.js referral-completeness-demo.html`.
+   - `tests/check_criteria.py` — compares the demo's rule data and triage wording against a dated snapshot of the NSW page, character for character: wording, order, duplicates, which items are sub-items, and the date wherever the page, this README and `NOTICE` write "as at" followed by a date. It reads the page's source; what the page displays is checked by `test_demo.js`. A difference in case, spacing or dash type counts as a difference. Run: `python3 tests/check_criteria.py referral-completeness-demo.html tests/fetched/<latest>.json`.
+   - **Monthly check against the live page** — `.github/workflows/monthly-nsw-check.yml` runs `tests/fetch_nsw.py` (downloads the NSW page, stores its SHA-256 hash and the relevant text as a new snapshot), then `check_criteria.py`, which also compares NSW's headings, Emergency section and any other text in the watched sections with the previous snapshot. The job opens an Issue if anything differs or the check cannot run, and adds the outcome to `tests/fetched/CHECK-LOG.md`; if that line cannot be saved, the Issue says so. It never edits the page: any change to reproduced NSW wording, to dates or to anything clinical is made and signed off by the author.
+   - **What the record shows so far.** The check on 1 October 2026 could not run and the one on 6 October 2026 was run by hand; both are in the log. Snapshots before the first GitHub Actions run were taken through an AI fetch tool that extracts text; they hold the text as that tool returned it and were not verified against the raw HTML. The monthly workflow and the page parser in `tests/fetch_nsw.py` had not been run against the live page when they were added (6 October 2026); the parser was tested only on a mock-up of the page. The first run is the test of both. It may report differences that come from the change of method and not from NSW (for example in the page headings); the author reviews that first report by hand.
 
 ## The question behind it
 
@@ -70,7 +72,10 @@ NOTICE                             third-party content and attributions
 CHANGELOG.md                       dated record of changes
 tests/test_demo.js                 Agent 1 — internal tests (Node + Playwright)
 tests/check_criteria.py            Agent 2 — consistency with the NSW page (Python 3)
-tests/fetched/                     dated copies of the NSW list used for comparison
+tests/fetch_nsw.py                 downloads the NSW page and writes a dated snapshot (Python 3)
+tests/fetched/                     dated snapshots of the NSW page, and CHECK-LOG.md, the record of every check
+.github/workflows/                 runs the tests on every push, and the monthly check against the live page
+package.json                       pins the Playwright version used by the tests
 docs/                              written material: the question, what was searched, what was found
 ```
 
@@ -82,7 +87,7 @@ docs/                              written material: the question, what was sear
 
 ## Authorship note
 
-Much of the code was produced with the assistance of an AI model, under the author's direction: the author chose what the page should and should not do, selected and verified the rule content against the published source, reviewed and edited every output, and is responsible for the result. This is recorded because the copyright status of AI-assisted code in Australia is unsettled; the licence above is offered on whatever rights exist.
+Created by Dr Ferney Bernal Buitrago with AI assistance. Much of the code was produced with the assistance of an AI model, under the author's direction: the author chose what the page should and should not do, selected and verified the rule content against the published source, reviewed and edited every output, and is responsible for the result. This is recorded because the copyright status of AI-assisted code in Australia is unsettled; the licence above is offered on whatever rights exist.
 
 ## Reporting a problem
 

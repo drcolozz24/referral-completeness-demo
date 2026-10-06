@@ -1,0 +1,90 @@
+# Monthly check of the live NSW Health page against the demonstration.
+#
+# What it does without anyone present:
+#   1. downloads the live NSW page and writes a dated snapshot (tests/fetch_nsw.py);
+#   2. compares the demo with it, literally, and compares the page's headings and Emergency
+#      section with the previous snapshot (tests/check_criteria.py);
+#   3. records the outcome — consistent, differences found, or could not run — as a line in
+#      tests/fetched/CHECK-LOG.md and commits that line and the snapshot;
+#   4. opens an Issue if there were differences, the check could not run, or the record
+#      could not be saved.
+#
+# What it never does: change the demonstration page, the README or the NOTICE. Any change to
+# reproduced NSW wording, dates or anything clinical is made and signed off by the author.
+name: monthly NSW check
+on:
+  schedule:
+    - cron: '17 22 1 * *'   # 1st of each month, 22:17 UTC = morning of the 2nd in Sydney; the log uses the Sydney date
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency: monthly-nsw-check
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch, compare and record
+        run: |
+          set -u
+          today=$(TZ=Australia/Sydney date +%F)
+          previous=$(ls tests/fetched/nsw-chest-pain-adult-*.json | sort | tail -n 1)
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then run_by="GitHub Actions (scheduled)"; else run_by="GitHub Actions (started by hand)"; fi
+          tidy() { tail -n 1 "$1" | sed 's/^COULD NOT RUN: //' | tr -d '<>' | tr '|' '/' | cut -c1-300; }
+
+          python3 tests/fetch_nsw.py --date "$today" > fetch.out 2>&1 && fetch_rc=0 || fetch_rc=$?
+          cat fetch.out
+
+          if [ "$fetch_rc" -ne 0 ]; then
+            outcome="COULD NOT RUN"
+            detail=$(tidy fetch.out)
+            cp fetch.out report.txt
+          else
+            snapshot=$(tail -n 1 fetch.out)
+            python3 tests/check_criteria.py referral-completeness-demo.html "$snapshot" --previous "$previous" > report.txt 2>&1 && check_rc=0 || check_rc=$?
+            cat report.txt
+            case "$check_rc" in
+              0) outcome="CONSISTENT";        detail="snapshot $(basename "$snapshot")" ;;
+              1) outcome="DIFFERENCES FOUND"; detail="snapshot $(basename "$snapshot"); see the Issue opened by this run" ;;
+              *) outcome="COULD NOT RUN";     detail=$(tidy report.txt) ;;
+            esac
+          fi
+
+          # Record the outcome. A failure to save the record must never hide the outcome,
+          # so it is noted and reported in an Issue rather than stopping the job here.
+          echo "| $today | $run_by | $outcome | $detail — [run]($run_url) |" >> tests/fetched/CHECK-LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/fetched
+          saved=yes
+          git commit -q -m "monthly NSW check $today: $outcome" || saved=no
+          if [ "$saved" = yes ]; then
+            git pull -q --rebase || saved=no
+            git push -q || saved=no
+          fi
+
+          if [ "$outcome" != "CONSISTENT" ] || [ "$saved" = no ]; then
+            {
+              echo "The monthly check of the NSW Health page on $today ended with: **$outcome**."
+              echo
+              if [ "$saved" = no ]; then
+                echo "**The outcome could not be saved to tests/fetched/CHECK-LOG.md** (the commit or push failed). Please add this line to the log by hand:"
+                echo
+                echo "\`| $today | $run_by | $outcome | $detail |\`"
+                echo
+              fi
+              echo "Nothing on the demonstration page has been changed. Any change to reproduced NSW wording, dates or clinical content needs the author's review."
+              echo
+              echo '```'
+              cat report.txt
+              echo '```'
+              echo
+              echo "Run: $run_url"
+            } > issue.md
+            gh issue create --title "Monthly NSW check $today: $outcome" --body-file issue.md
+            exit 1
+          fi
