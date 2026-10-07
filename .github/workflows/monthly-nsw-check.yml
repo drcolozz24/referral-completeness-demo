@@ -9,8 +9,13 @@
 #   4. opens an Issue if there were differences, the check could not run, or the record
 #      could not be saved.
 #
-# What it never does: change the demonstration page, the README or the NOTICE. Any change to
-# reproduced NSW wording, dates or anything clinical is made and signed off by the author.
+# When, and only when, the check is consistent, it also rebuilds data/nsw-chest-pain-adult.json
+# (the copy for software and AI agents) from the new snapshot, which moves its "last_verified"
+# date on without changing any NSW wording.
+#
+# What it never does: change the demonstration page, the README or the NOTICE, or change NSW
+# wording in the data file. Any change to reproduced NSW wording, dates or anything clinical is
+# made and signed off by the author.
 name: monthly NSW check
 on:
   schedule:
@@ -48,7 +53,9 @@ jobs:
             python3 tests/check_criteria.py referral-completeness-demo.html "$snapshot" --previous "$previous" > report.txt 2>&1 && check_rc=0 || check_rc=$?
             cat report.txt
             case "$check_rc" in
-              0) outcome="CONSISTENT";        detail="snapshot $(basename "$snapshot")" ;;
+              0) outcome="CONSISTENT";        detail="snapshot $(basename "$snapshot")"
+                 # NSW content unchanged: rebuild the agents' data file so its last-verified date moves on.
+                 python3 tests/build_data.py "$snapshot" ;;
               1) outcome="DIFFERENCES FOUND"; detail="snapshot $(basename "$snapshot"); see the Issue opened by this run" ;;
               *) outcome="COULD NOT RUN";     detail=$(tidy report.txt) ;;
             esac
@@ -59,7 +66,7 @@ jobs:
           echo "| $today | $run_by | $outcome | $detail — [run]($run_url) |" >> tests/fetched/CHECK-LOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tests/fetched
+          git add tests/fetched data
           saved=yes
           git commit -q -m "monthly NSW check $today: $outcome" || saved=no
           if [ "$saved" = yes ]; then

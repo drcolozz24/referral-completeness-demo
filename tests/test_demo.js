@@ -21,6 +21,9 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
     (html.match(re) || [''])[0]));
   check('no external scripts', !/<script[^>]+src=["']https?:/i.test(html));
   check('no external stylesheets/fonts', !/<link[^>]+href=["']https?:/i.test(html));
+  check('page points software and agents to the data file and guide', /href="data\/nsw-chest-pain-adult\.json"/.test(html) && /href="llms\.txt"/.test(html));
+  const root = path.dirname(FILE);
+  check('data file and agent guide exist beside the page', fs.existsSync(path.join(root, 'data', 'nsw-chest-pain-adult.json')) && fs.existsSync(path.join(root, 'llms.txt')));
   check('no fetch/XHR in code', !/fetch\(|XMLHttpRequest/.test(html));
   check('no storage APIs', !/localStorage|sessionStorage|indexedDB|document\.cookie/.test(html));
   check('gate names negligence', /including liability for negligence/i.test(html));
