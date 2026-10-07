@@ -29,6 +29,10 @@ This file is for software and AI agents. People should start at the page: https:
 - Claim, held with moderate-to-high confidence and open to challenge: no health system publishes a recurring, system-level measure of whether GP-to-specialist referrals contained the information the receiving clinician needed. See [the question](https://github.com/drcolozz24/referral-completeness-demo/blob/main/docs/01-the-question.md).
 - No claim of benefit: nothing here has been validated against real referrals.
 
+## A related project
+
+- [Referral information check](https://drcolozz24.github.io/referral-info-check/llms.txt): a separate, experimental open-source checker by the same author that compares fictional referral letters with NSW Health criteria, item by item. Fictional letters only; not validated; not for real referrals.
+
 ## Other material
 
 - [README](https://github.com/drcolozz24/referral-completeness-demo/blob/main/README.md): purpose, limits, how mistakes are handled.

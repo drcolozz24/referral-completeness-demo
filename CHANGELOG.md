@@ -4,6 +4,9 @@ All notable changes to this repository. Dates are Australian Eastern time.
 
 ## Unreleased — changes since v1.0 (to be tagged v1.1 once reviewed and merged)
 
+### 2026-10-07 (link to the checker project)
+- **Linked to the separate checker project.** The information panel and `llms.txt` now point to *Referral information check* (https://github.com/drcolozz24/referral-info-check), an experimental open-source checker that grew from this demonstration. The link says it is research on fictional letters only, not validated and not for real referrals. Nothing else on the page changed.
+
 ### 2026-10-07 (after v1.3)
 - **Made findable by search engines.** The page and the front page now carry a description, a canonical address and sharing tags; `sitemap.xml` lists the page, the agent guide and the data file. Before this the site gave search engines only a bare title, and a search for the project's name did not find it. No visible content of the demonstration changed.
 
