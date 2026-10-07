@@ -792,6 +792,13 @@
         .src-note { font-size:12.5px; color:#475569; background:#f1f5f9; border-radius:6px; padding:10px 12px; margin-top:14px; line-height:1.5; }
         .src-note a { color:#0066cc; }
         .finding-text a { color:#0066cc; }
+        /* result statement: neutral, so that it reads as a statement and not as a pass or a fail */
+        .validation-message { background:#f1f5f9; border-left-color:#64748b; text-align:left; font-size:14px; line-height:1.55; color:#333; }
+        .validation-message .validation-title { color:#1a1a1a; font-size:17px; margin-bottom:10px; }
+        .validation-message p { margin-top:8px; }
+        .validation-message a { color:#0066cc; }
+        /* the progress shape was drawn as a filled wedge that hid part of the count; cut out the centre so it is a ring */
+        .progress-circle { border: 0; -webkit-mask: radial-gradient(circle, transparent 57px, #000 58px); mask: radial-gradient(circle, transparent 57px, #000 58px); }
         
 
     </style>
@@ -908,8 +915,9 @@ Dr A. Referrer, General Practitioner</textarea>
                 </div>
 
                 <div class="validation-message">
-                    <div class="validation-title">Compared against the published NSW list</div>
-                    This is a count of items mentioned. It is not an assessment of the referral's quality or of the patient, and it is not a prediction of what any service will do with it.
+                    <div class="validation-title" id="verdict">Compared against the published NSW list</div>
+                    <p id="nswConsequence">What NSW Health says about missing information. NSW describes the required list as <q id="nswQuote0">Mandatory information that is to be supplied with referrals to NSW public specialist outpatient services</q>. Of referring health professionals who do not reference the criteria, it says: <q id="nswQuote">As a result, patients may experience delayed access to care due to NSW public specialist outpatient services seeking additional clinical and/or referral information from referring health professionals to support referral screening and triage and/or returning the referral to referring health professionals with advice of alternative care options.</q> NSW does not say which of these a service will do with a given referral, and the same page says referring health professionals and clinicians <q id="nswQuote2">may override the SRC should it be deemed necessary</q>. Source: NSW Health, <a href="https://www.health.nsw.gov.au/outpatients/referrals/Pages/faqs.aspx" target="_blank" rel="noopener">Frequently asked questions about state-wide referral criteria</a>, page dated 6 June 2025. © State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Quoted under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a>.</p>
+                    <p>This is a count of items mentioned. It is not an assessment of the referral's quality or of the patient, and it is not a prediction of what any service will do with it.</p>
                 </div>
 
                 <div class="findings-grid">
@@ -1052,6 +1060,9 @@ Dr A. Referrer, General Practitioner</textarea>
             const missingOpt = IF_AVAILABLE.filter(i => !ticked(i.id));
             const n = REQUIRED.length, k = presentReq.length;
             document.getElementById('progressValue').textContent = `${k} / ${n}`;
+            document.getElementById('verdict').textContent = k === n
+                ? `This letter mentions all ${n} items NSW lists as required.`
+                : `This letter does not mention ${n - k} of the ${n} items NSW lists as required.`;
             document.getElementById('progressValue').style.color = k === 0 ? '#475569' : '';
             document.getElementById('progressFill').style.setProperty('--progress-deg', `${Math.round(360 * k / n)}deg`);
             const fill = (elId, items, icon, tail) => {

@@ -35,6 +35,15 @@ NOTICE — third-party content and attributions
    the page headings, are kept in tests/fetched/ for the monthly
    consistency check, under the same licence and attribution.
 
+   The result screen also quotes three passages from NSW Health,
+   "Frequently asked questions about state-wide referral criteria" (page
+   dated 6 June 2025),
+   https://www.health.nsw.gov.au/outpatients/referrals/Pages/faqs.aspx,
+   under the same copyright statement and licence. The passages are
+   quoted unchanged; two are parts of sentences and one is a whole
+   sentence. They were checked character for character against the page's
+   HTML, saved by the author on 7 October 2026.
+
 2. Criteria of other Australian jurisdictions
 
    The Victorian Statewide Referral Criteria, Queensland Clinical
