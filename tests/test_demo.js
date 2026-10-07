@@ -20,7 +20,9 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   forbidden.forEach(re => check(`no forbidden term ${re}`, !re.test(html.replace(/\.requirement-badge\.recommended/g, '')),
     (html.match(re) || [''])[0]));
   check('no external scripts', !/<script[^>]+src=["']https?:/i.test(html));
-  check('no external stylesheets/fonts', !/<link[^>]+href=["']https?:/i.test(html));
+  const extLinks = (html.match(/<link[^>]+href=["']https?:[^>]*>/gi) || []).filter(l => !/rel=["']canonical["']/i.test(l));
+  check('no external stylesheets/fonts (a canonical link is the only outside address in a link tag)', extLinks.length === 0, extLinks.join(' '));
+  check('page describes itself to search engines', /<meta name="description" content="[^"]{80,}"/.test(html) && /rel="canonical"/.test(html));
   check('page points software and agents to the data file and guide', /href="data\/nsw-chest-pain-adult\.json"/.test(html) && /href="llms\.txt"/.test(html));
   const root = path.dirname(FILE);
   check('data file and agent guide exist beside the page', fs.existsSync(path.join(root, 'data', 'nsw-chest-pain-adult.json')) && fs.existsSync(path.join(root, 'llms.txt')));
