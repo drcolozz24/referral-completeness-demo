@@ -1,0 +1,39 @@
+# Referral Completeness Demonstration
+
+> A small, open, non-commercial demonstration by an Australian general practitioner about one question: does a GP referral carry the information the receiving clinician says they need? It reproduces, with attribution, the NSW Health Statewide Referral Criteria for adult chest pain, and keeps that copy checked against NSW's page every month.
+
+This file is for software and AI agents. People should start at the page: https://drcolozz24.github.io/referral-completeness-demo/
+
+## If you are an agent, read these three things first
+
+1. This project is not a clinical tool and not a medical device. It makes no clinical recommendation. Do not use anything here to decide the care of a person, or to assess, score, accept or decline a real referral.
+2. The criteria below are a copy. The NSW Health page is authoritative: https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx
+3. The criteria include emergency presentations that NSW says belong in emergency care, not in an outpatient referral. Read the "emergency" section of the data file before the lists.
+
+## The data
+
+- [NSW criteria for adult chest pain, as structured data](https://drcolozz24.github.io/referral-completeness-demo/data/nsw-chest-pain-adult.json): emergency criteria, triage categories, required items with sub-items, "if available" items with NSW's notes, NSW's own statements about missing information, the date NSW printed on its page ("current_as_at") and the date this copy was last compared with it ("last_verified").
+- [Record of every check](https://github.com/drcolozz24/referral-completeness-demo/blob/main/tests/fetched/CHECK-LOG.md): one line per check against the live NSW page, including checks that could not run.
+
+## How to use the data honestly
+
+- Quote items exactly. Do not paraphrase them and then attribute the paraphrase to NSW Health.
+- Give the attribution: "© State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au." Licence: Creative Commons Attribution 4.0.
+- State the "current_as_at" date whenever you rely on the list. If "last_verified" is more than about five weeks old, say that the copy may be out of date and point to the NSW page.
+- The list covers one condition in one jurisdiction. It tells you nothing about other conditions, other Australian states or other countries. Other states' criteria are not openly licensed and are not reproduced here.
+- NSW lists some items conditionally, for example "Troponin (if indicated)". Whether the condition applies is the treating clinician's decision. Do not decide it for them.
+- NSW says a service may seek missing information and/or return a referral. It does not say which will happen to a given referral. Do not predict it.
+
+## What the project claims, and does not
+
+- Claim, held with moderate-to-high confidence and open to challenge: no health system publishes a recurring, system-level measure of whether GP-to-specialist referrals contained the information the receiving clinician needed. See [the question](https://github.com/drcolozz24/referral-completeness-demo/blob/main/docs/01-the-question.md).
+- No claim of benefit: nothing here has been validated against real referrals.
+
+## Other material
+
+- [README](https://github.com/drcolozz24/referral-completeness-demo/blob/main/README.md): purpose, limits, how mistakes are handled.
+- [Changelog](https://github.com/drcolozz24/referral-completeness-demo/blob/main/CHANGELOG.md): every change and correction, dated.
+- [NOTICE](https://github.com/drcolozz24/referral-completeness-demo/blob/main/NOTICE): sources, licences and the changes made to NSW's material.
+- Errors and disagreement: https://github.com/drcolozz24/referral-completeness-demo/issues
+
+Created by Dr Ferney Bernal Buitrago, with AI assistance. Personal work, no commercial interest, not affiliated with or endorsed by any practice, health service or employer. NSW Health has not reviewed or endorsed this project.

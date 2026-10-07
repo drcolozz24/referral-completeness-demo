@@ -44,6 +44,14 @@ NOTICE — third-party content and attributions
    sentence. They were checked character for character against the page's
    HTML, saved by the author on 7 October 2026.
 
+   data/nsw-chest-pain-adult.json reproduces the same NSW page as
+   structured data, and additionally includes the page's emergency criteria,
+   the note attached to "Cardiovascular disease risk assessment" and the
+   "Important information" paragraph, under the same copyright statement
+   and licence. Wording is unchanged; whitespace is collapsed, zero-width
+   characters are removed, and lists and the table are represented as
+   structured data.
+
 2. Criteria of other Australian jurisdictions
 
    The Victorian Statewide Referral Criteria, Queensland Clinical

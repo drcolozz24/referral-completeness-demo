@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "title": "NSW Statewide Referral Criteria — chest pain, discomfort and/or tightness in adult patients",
+  "what_this_is": "A machine-readable copy of one NSW Health referral-criteria page, published by the Referral Completeness Demonstration so that software and AI agents can read the same verified text the demonstration page shows. It is a copy; the NSW Health page is authoritative.",
+  "jurisdiction": "New South Wales, Australia",
+  "applies_to": "Referrals of adults with chest pain to NSW public specialist outpatient (cardiology) services",
+  "source": {
+    "publisher": "NSW Health",
+    "url": "https://www.health.nsw.gov.au/outpatients/referrals/Pages/chest-pain-tightness-adult.aspx",
+    "attribution": "© State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.",
+    "licence": "Creative Commons Attribution 4.0",
+    "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+    "changes_made": "Wording unchanged. Whitespace collapsed and zero-width characters removed. Lists and the triage table are represented as structured data. NSW Health has not reviewed or endorsed this file."
+  },
+  "current_as_at": "10 September 2026",
+  "last_verified": {
+    "date": "2026-10-07",
+    "method": "Raw HTML downloaded from the live page and parsed by tests/fetch_nsw.py.",
+    "result": "This file was built from that snapshot. The monthly check rebuilds it only when the comparison with the live NSW page is consistent.",
+    "record_of_checks": "https://github.com/drcolozz24/referral-completeness-demo/blob/main/tests/fetched/CHECK-LOG.md"
+  },
+  "use": {
+    "read_first": "Check the emergency criteria before anything else. NSW states that those presentations are for emergency care, not for an outpatient referral.",
+    "intended_for": "Discussion, education and research about what referrals contain. Reading this file to learn what NSW publishes is the intended use.",
+    "not_for": [
+      "This is not a clinical tool or a medical device and makes no clinical recommendation.",
+      "Do not use it to decide the care of any person, or to assess, score, accept or decline a real referral.",
+      "Do not treat it as current without checking current_as_at and last_verified against the NSW page.",
+      "It covers one condition in one jurisdiction. It says nothing about other conditions or other states."
+    ],
+    "when_quoting": "Quote items exactly, give the NSW attribution and licence above, and state the current_as_at date."
+  },
+  "emergency": {
+    "intro": "If any of the following are suspected please seek emergency medical advice or refer the patient to the emergency department (via ambulance if necessary):",
+    "items": [
+      {
+        "text": "Any of the following features occurring within the past 72 hours:",
+        "sub_items": [
+          {
+            "text": "Ischaemic chest pain or acute coronary syndrome (ACS) symptoms lasting > 10 minutes"
+          },
+          {
+            "text": "Recurrent chest pain or ACS symptoms new at rest or on minimal exertion"
+          },
+          {
+            "text": "Severe or ongoing chest pain or cardiac symptoms indicative of an ACS (e.g. chest, jaw, neck and/or shoulder discomfort, shortness of breath, fatigue, nausea, diaphoresis or vomiting)"
+          }
+        ]
+      },
+      {
+        "text": "Chest pain associated with any of the following features:",
+        "sub_items": [
+          {
+            "text": "Complete heart block"
+          },
+          {
+            "text": "Heart failure or suspected pulmonary oedema"
+          },
+          {
+            "text": "New left bundle branch block"
+          },
+          {
+            "text": "Severe dyspnoea or respiratory rate > 30 per minute"
+          },
+          {
+            "text": "ST elevation or depression"
+          },
+          {
+            "text": "Systolic blood pressure < 90 mmHg"
+          },
+          {
+            "text": "Syncope or pre-syncope"
+          },
+          {
+            "text": "Tachycardia (i.e. > 120 bpm)"
+          }
+        ]
+      },
+      {
+        "text": "If high probability of angina, and/or ACS symptoms are unstable or poorly controlled"
+      },
+      {
+        "text": "Suspected aortic dissection, pulmonary embolism, pneumothorax or oesophageal rupture"
+      }
+    ],
+    "note": "a high level of suspicion for ischaemic heart disease is required for people who identify as Aboriginal and/or Torres Strait Islander, South Asian and have had recent coronary intervention or have known coronary disease"
+  },
+  "triage_categories": [
+    {
+      "category": "Category 1",
+      "timeframe": "Recommended to be seen within 30 calendar days",
+      "criteria": "New chest pain or discomfort of a probable cardiac origin in the absence of Emergency criteria"
+    },
+    {
+      "category": "Category 2",
+      "timeframe": "Recommended to be seen within 90 calendar days",
+      "criteria": "Chronic chest pain or discomfort of a suspected coronary or non-coronary cardiac origin in the absence of Emergency criteria"
+    },
+    {
+      "category": "Category 3",
+      "timeframe": "Recommended to be seen within 365 calendar days",
+      "criteria": "Chest pain or discomfort of an unlikely cardiac origin with no identified cause following investigation"
+    }
+  ],
+  "required": [
+    {
+      "text": "Reason for referral"
+    },
+    {
+      "text": "Details of the presenting condition, including symptoms and their duration, and impact on activities of daily living"
+    },
+    {
+      "text": "Provisional diagnosis"
+    },
+    {
+      "text": "Patient health summary (such as relevant medical history, relevant investigations, current medications and dosages, immunisations, allergies and/or adverse reactions), specifically including:",
+      "sub_items": [
+        {
+          "text": "Alleviating interventions and management"
+        },
+        {
+          "text": "Functional status assessment"
+        },
+        {
+          "text": "Full blood count"
+        },
+        {
+          "text": "Electrolytes, urea and creatinine"
+        },
+        {
+          "text": "Fasting lipid profile"
+        },
+        {
+          "text": "HbA1c (if diabetes is present or suspected)"
+        },
+        {
+          "text": "Liver function tests"
+        },
+        {
+          "text": "Relevant electrocardiogram (ECG) tracings"
+        },
+        {
+          "text": "Troponin (if indicated)"
+        }
+      ]
+    }
+  ],
+  "if_available": [
+    {
+      "text": "Cardiovascular disease risk assessment",
+      "note": "Note: refer to the Australian guideline and calculator for assessing and managing cardiovascular risk resource"
+    },
+    {
+      "text": "Family history of sudden cardiac death or cardiac disease"
+    },
+    {
+      "text": "History of smoking, vaping, alcohol intake and drug use (including recreational drugs)"
+    },
+    {
+      "text": "If symptoms may be linked to SARS COV-2 (COVID-19) infection or Long COVID-19"
+    },
+    {
+      "text": "Relevant investigation results (e.g. cardiac imaging, stress test, myocardial perfusion scan, previous cardiac surgery reports)"
+    }
+  ],
+  "other_text": {
+    "emergency": [],
+    "required": [],
+    "if_available": [],
+    "important_information": [
+      "If there is a change to a patient’s condition while waiting for their appointment, referring health professionals may further investigate and manage the situation, or send an updated referral to the outpatient service. Where there are significant concerns about a patient's condition, referring health professionals may check HealthPathways for urgent/same day advice or contact the relevant clinical team."
+    ]
+  },
+  "nsw_statements_on_missing_information": {
+    "source_url": "https://www.health.nsw.gov.au/outpatients/referrals/Pages/faqs.aspx",
+    "source_title": "Frequently asked questions about state-wide referral criteria",
+    "page_dated": "6 June 2025",
+    "verified": "Checked character for character against the page's HTML on 7 October 2026. Not covered by the monthly check.",
+    "statements": [
+      {
+        "about": "the required list",
+        "quote": "Mandatory information that is to be supplied with referrals to NSW public specialist outpatient services"
+      },
+      {
+        "about": "what follows when the criteria are not referenced",
+        "quote": "As a result, patients may experience delayed access to care due to NSW public specialist outpatient services seeking additional clinical and/or referral information from referring health professionals to support referral screening and triage and/or returning the referral to referring health professionals with advice of alternative care options."
+      },
+      {
+        "about": "overriding the criteria",
+        "quote": "may override the SRC should it be deemed necessary"
+      }
+    ],
+    "note": "NSW does not say which outcome applies to a given referral."
+  },
+  "published_by": {
+    "project": "Referral Completeness Demonstration",
+    "creator": "Dr Ferney Bernal Buitrago, general practitioner, with AI assistance",
+    "page": "https://drcolozz24.github.io/referral-completeness-demo/",
+    "repository": "https://github.com/drcolozz24/referral-completeness-demo",
+    "report_an_error": "https://github.com/drcolozz24/referral-completeness-demo/issues"
+  }
+}
