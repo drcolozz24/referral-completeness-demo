@@ -24,7 +24,7 @@ Created by Dr Ferney Bernal Buitrago, general practitioner, with AI assistance. 
 
 ## What it does
 
-You are shown a fictional referral letter for adult chest pain. You tick which items from the published NSW Health referral criteria the letter contains. The page counts what is mentioned and what is not, and shows you the published list it compared against. That is all.
+You are shown a fictional referral letter for adult chest pain. You tick which items from the published NSW Health referral criteria the letter contains. The page counts what is mentioned and what is not, states the result in one sentence ("This letter does not mention 8 of the 13 items NSW lists as required"), quotes what NSW Health itself says about missing information, and shows you the published list it compared against. That is all. It does not predict what a service would do with the referral: NSW says a service may seek the missing information and/or return the referral, does not say which, and allows clinicians to override the criteria. The page quotes that and stops there.
 
 The rule list is visible on screen and in the source code, and is reproduced verbatim from the NSW Health page it links to, with the nine sub-items of "Patient health summary" counted individually (see *Sources and licences*).
 

@@ -79,6 +79,12 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   check('default count is 5 / 13', val.trim() === '5 / 13', val);
   const missing = await page.locator('#missingReq .finding-item').count();
   check('default missing-required count is 8', missing === 8, `${missing}`);
+  let verdict = (await page.locator('#verdict').textContent()).trim();
+  check('default result statement', verdict === 'This letter does not mention 8 of the 13 items NSW lists as required.', verdict);
+  const consequence = await page.locator('#nswConsequence').textContent();
+  check('NSW statement on missing information is quoted with its source',
+    /patients may experience delayed access to care/.test(consequence) && /returning the referral to referring health professionals/.test(consequence) && /faqs\.aspx/.test(html) && /page dated \d{1,2} \w+ \d{4}/.test(consequence));
+  check('result says NSW does not state which outcome applies', /NSW does not say which of these a service will do with a given referral/.test(consequence));
 
   // all ticked
   await page.getByText('Change the ticks').click();
@@ -86,6 +92,8 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   await page.getByText('Compare against the published list').click();
   val = await page.locator('#progressValue').textContent();
   check('all ticked gives 13 / 13', val.trim() === '13 / 13', val);
+  verdict = (await page.locator('#verdict').textContent()).trim();
+  check('all-ticked result statement', verdict === 'This letter mentions all 13 items NSW lists as required.', verdict);
   check('all ticked: "None" shown for missing', /None/.test(await page.locator('#missingReq').textContent()));
 
   // none ticked
@@ -98,6 +106,7 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); }
   // output wording never recommends
   const resultText = await page.locator('#screen3').textContent();
   check('result text contains no recommendation language', !/recommend|should order|must order|critical|urgent/i.test(resultText));
+  check('result does not predict a decision on the referral', !/(will|would|likely to) be (accepted|rejected|declined|returned)|\b(accepted|rejected|declined)\b/i.test(resultText), '');
 
   await page.getByText('See the full published list').click();
   check('screen 4 shown', await page.locator('#screen4').isVisible());
